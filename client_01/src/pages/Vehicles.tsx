@@ -1,0 +1,457 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Fuel,
+  Users,
+  Settings,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+
+const Vehicles = () => {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Scroll to top when component mounts or page changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  // Reset to page 1 when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeFilter]);
+
+  const filters = ["All", "Sedan", "Hatchback", "SUV", "Van", "Luxury"];
+
+  // Extended vehicles data - in a real app, this would come from an API
+  const allVehicles = [
+    {
+      id: 1,
+      model: "Toyota Prius",
+      type: "Sedan",
+      image:
+        "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "80L",
+        transmission: "Manual",
+        capacity: "5 People",
+      },
+      price: "Rs 12,000",
+      priceUnit: "day",
+      description:
+        "Eco-friendly hybrid sedan perfect for city driving and long-distance comfort.",
+    },
+    {
+      id: 2,
+      model: "Honda Civic",
+      type: "Hatchback",
+      image:
+        "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "60L",
+        transmission: "Manual",
+        capacity: "5 People",
+      },
+      price: "Rs 10,000",
+      priceUnit: "day",
+      description:
+        "Compact and efficient hatchback ideal for urban exploration and easy parking.",
+    },
+    {
+      id: 3,
+      model: "Toyota Hiace",
+      type: "Van",
+      image:
+        "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "100L",
+        transmission: "Manual",
+        capacity: "9 People",
+      },
+      price: "Rs 18,000",
+      priceUnit: "day",
+      description:
+        "Spacious van perfect for group travel and family adventures with ample luggage space.",
+    },
+    {
+      id: 4,
+      model: "Toyota RAV4",
+      type: "SUV",
+      image:
+        "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "90L",
+        transmission: "Automatic",
+        capacity: "7 People",
+      },
+      price: "Rs 22,000",
+      priceUnit: "day",
+      description:
+        "Versatile SUV with 4WD capability, perfect for off-road adventures and mountain drives.",
+    },
+    {
+      id: 5,
+      model: "Honda Fit",
+      type: "Hatchback",
+      image:
+        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "50L",
+        transmission: "Automatic",
+        capacity: "4 People",
+      },
+      price: "Rs 8,000",
+      priceUnit: "day",
+      description:
+        "Budget-friendly compact car with excellent fuel economy for solo travelers and couples.",
+    },
+    {
+      id: 6,
+      model: "Toyota Camry",
+      type: "Sedan",
+      image:
+        "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "85L",
+        transmission: "Automatic",
+        capacity: "5 People",
+      },
+      price: "Rs 15,000",
+      priceUnit: "day",
+      description:
+        "Premium sedan offering luxury comfort and smooth performance for business travel.",
+    },
+    {
+      id: 7,
+      model: "Mercedes-Benz E-Class",
+      type: "Luxury",
+      image:
+        "https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "95L",
+        transmission: "Automatic",
+        capacity: "5 People",
+      },
+      price: "Rs 35,000",
+      priceUnit: "day",
+      description:
+        "Ultimate luxury experience with premium amenities and sophisticated design.",
+    },
+    {
+      id: 8,
+      model: "Mitsubishi Montero",
+      type: "SUV",
+      image:
+        "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "120L",
+        transmission: "Manual",
+        capacity: "8 People",
+      },
+      price: "Rs 25,000",
+      priceUnit: "day",
+      description:
+        "Rugged SUV built for adventure tourism and challenging terrain exploration.",
+    },
+    {
+      id: 9,
+      model: "Nissan March",
+      type: "Hatchback",
+      image:
+        "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "45L",
+        transmission: "Manual",
+        capacity: "4 People",
+      },
+      price: "Rs 7,000",
+      priceUnit: "day",
+      description:
+        "Economy compact car perfect for budget-conscious travelers exploring the city.",
+    },
+    {
+      id: 10,
+      model: "Toyota Coaster",
+      type: "Van",
+      image:
+        "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "150L",
+        transmission: "Manual",
+        capacity: "15 People",
+      },
+      price: "Rs 30,000",
+      priceUnit: "day",
+      description:
+        "Large capacity van ideal for group tours and corporate transportation needs.",
+    },
+    {
+      id: 11,
+      model: "BMW 3 Series",
+      type: "Luxury",
+      image:
+        "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "90L",
+        transmission: "Automatic",
+        capacity: "5 People",
+      },
+      price: "Rs 40,000",
+      priceUnit: "day",
+      description:
+        "Premium luxury sedan combining performance, comfort, and cutting-edge technology.",
+    },
+    {
+      id: 12,
+      model: "Suzuki Alto",
+      type: "Hatchback",
+      image:
+        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop",
+      specs: {
+        fuel: "35L",
+        transmission: "Manual",
+        capacity: "4 People",
+      },
+      price: "Rs 6,000",
+      priceUnit: "day",
+      description:
+        "Ultra-compact and fuel-efficient car perfect for short city trips and daily commuting.",
+    },
+  ];
+
+  // Filter vehicles based on active filter
+  const filteredVehicles =
+    activeFilter === "All"
+      ? allVehicles
+      : allVehicles.filter((vehicle) => vehicle.type === activeFilter);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentVehicles = filteredVehicles.slice(startIndex, endIndex);
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  return (
+    <div className="min-h-screen">
+      <Navigation />
+
+      <div className="pt-nav">
+        <div className="container mx-auto px-4 py-8">
+          {/* Header */}
+          <div className="mb-8">
+            <Link
+              to="/#vehicles"
+              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Link>
+
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <div>
+                <h1 className="text-4xl font-bold mb-2">All Vehicles</h1>
+                <p className="text-muted-foreground">
+                  Find the perfect vehicle for your Sri Lankan adventure
+                </p>
+              </div>
+              <div className="mt-4 md:mt-0">
+                <span className="text-sm text-muted-foreground">
+                  Showing {startIndex + 1}-
+                  {Math.min(endIndex, filteredVehicles.length)} of{" "}
+                  {filteredVehicles.length} vehicles
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap gap-2 mb-12">
+            <div className="flex items-center gap-2 mr-4">
+              <Filter className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm font-medium text-muted-foreground">
+                Filter by type:
+              </span>
+            </div>
+            {filters.map((filter) => (
+              <Button
+                key={filter}
+                variant={activeFilter === filter ? "default" : "outline"}
+                size="sm"
+                onClick={() => setActiveFilter(filter)}
+                className="rounded-full"
+              >
+                {filter}
+              </Button>
+            ))}
+          </div>
+
+          {/* Vehicles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {currentVehicles.map((vehicle) => (
+              <Link
+                key={vehicle.id}
+                to={`/vehicle/${vehicle.id}`}
+                className="block"
+              >
+                <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer h-full">
+                  <div className="relative">
+                    <img
+                      src={vehicle.image}
+                      alt={vehicle.model}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
+                        {vehicle.type}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
+                    <h3 className="text-xl font-semibold mb-2 text-center">
+                      {vehicle.model}
+                    </h3>
+
+                    <p className="text-muted-foreground text-sm mb-4 flex-grow text-center">
+                      {vehicle.description}
+                    </p>
+
+                    {/* Specs */}
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="text-center">
+                        <Fuel
+                          className="mx-auto mb-2 text-muted-foreground"
+                          size={20}
+                        />
+                        <div className="text-sm font-medium">
+                          {vehicle.specs.fuel}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Fuel
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <Settings
+                          className="mx-auto mb-2 text-muted-foreground"
+                          size={20}
+                        />
+                        <div className="text-sm font-medium">
+                          {vehicle.specs.transmission}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Transmission
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <Users
+                          className="mx-auto mb-2 text-muted-foreground"
+                          size={20}
+                        />
+                        <div className="text-sm font-medium">
+                          {vehicle.specs.capacity}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Capacity
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Price */}
+                    <div className="text-center mb-6">
+                      <span className="text-2xl font-bold text-primary">
+                        {vehicle.price}
+                      </span>
+                      <span className="text-muted-foreground">
+                        /{vehicle.priceUnit}
+                      </span>
+                    </div>
+
+                    <Button variant="pill" className="w-full mt-auto">
+                      View Details
+                    </Button>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {currentVehicles.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                No vehicles found for "{activeFilter}" type.
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => setActiveFilter("All")}
+                className="mt-4"
+              >
+                View All Vehicles
+              </Button>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Previous
+              </Button>
+
+              <div className="flex items-center space-x-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => (
+                    <Button
+                      key={page}
+                      variant={currentPage === page ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => goToPage(page)}
+                      className="w-10 h-10"
+                    >
+                      {page}
+                    </Button>
+                  )
+                )}
+              </div>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="flex items-center gap-2"
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Vehicles;
