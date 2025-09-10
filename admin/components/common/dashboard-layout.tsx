@@ -49,9 +49,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex h-14 sm:h-16 items-center border-b border-sidebar-border px-4 sm:px-6">
         <Link
           href="/"
-          className="flex h-8 w-20 sm:w-24 items-center justify-center border-2 border-dashed border-sidebar-foreground/30 text-xs sm:text-sm text-sidebar-foreground hover:border-sidebar-foreground/50 transition-colors"
+          className="text-xl font-bold tracking-wider"
         >
-          Logo area
+          TRAVORA
         </Link>
       </div>
 
