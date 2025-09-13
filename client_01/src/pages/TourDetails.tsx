@@ -303,7 +303,7 @@ const TourDetails = () => {
       <Navigation />
 
       <div className="pt-nav">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Back Button */}
           <Link
             to="/#tours"
@@ -326,32 +326,96 @@ const TourDetails = () => {
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2">
               {/* Hero Image Gallery */}
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {/* Large image */}
-                <div
-                  className="col-span-2 md:col-span-1 md:row-span-2 cursor-pointer"
-                  onClick={() => openLightbox(0)}
-                >
-                  <img
-                    src={tour.images[0].src}
-                    alt={tour.images[0].alt}
-                    className="w-full h-64 md:h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                {/* Small images */}
-                {tour.images.slice(1).map((image, index) => (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 mb-8 h-[350px]">
+                {/* Main Featured Image - Left Side */}
+                <div className="lg:col-span-2 h-full">
                   <div
-                    key={index}
-                    className="col-span-1 cursor-pointer"
-                    onClick={() => openLightbox(index + 1)}
+                    className="relative w-full h-full cursor-pointer group overflow-hidden rounded-md"
+                    onClick={() => openLightbox(0)}
                   >
                     <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
+                      src={tour.images[0].src}
+                      alt={tour.images[0].alt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Image info overlay */}
+                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 className="text-lg font-bold drop-shadow-lg">
+                        {tour.title}
+                      </h3>
+                      <p className="text-sm text-white/90 drop-shadow-md">
+                        {tour.location}
+                      </p>
+                    </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Thumbnail Grid - Right Side */}
+                <div className="lg:col-span-1 h-full">
+                  <div className="grid grid-cols-2 gap-1 h-full">
+                    {/* Top Left Thumbnail */}
+                    {tour.images[1] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(1)}
+                      >
+                        <img
+                          src={tour.images[1].src}
+                          alt={tour.images[1].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+
+                    {/* Top Right Thumbnail */}
+                    {tour.images[2] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(2)}
+                      >
+                        <img
+                          src={tour.images[2].src}
+                          alt={tour.images[2].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+
+                    {/* Bottom Left Thumbnail */}
+                    {tour.images[3] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(3)}
+                      >
+                        <img
+                          src={tour.images[3].src}
+                          alt={tour.images[3].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+
+                    {/* Bottom Right - View All Button */}
+                    {tour.images[4] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(3)}
+                      >
+                        <img
+                          src={tour.images[3].src}
+                          alt={tour.images[3].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* Description Section */}

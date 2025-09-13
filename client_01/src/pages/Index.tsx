@@ -6,6 +6,7 @@ import TourPlansSection from "@/components/TourPlansSection";
 import RentVehicleSection from "@/components/RentVehicleSection";
 import GallerySection from "@/components/GallerySection";
 import Footer from "@/components/Footer";
+import FloatingCallButton from "@/components/FloatingCallButton";
 
 const Index = () => {
   return (
@@ -18,6 +19,9 @@ const Index = () => {
       <RentVehicleSection />
       <GallerySection />
       <Footer />
+
+      {/* Floating Call Button */}
+      <FloatingCallButton />
     </div>
   );
 };

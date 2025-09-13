@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Fuel, Users, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const RentVehicleSection = () => {
   const vehicles = [
@@ -48,103 +49,179 @@ const RentVehicleSection = () => {
     },
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 80,
+        damping: 15,
+      },
+    },
+  };
+
   return (
     <section id="vehicles" className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-12">Rent Vehicle</h2>
+      <div className="container mx-auto max-w-7xl px-4">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold mb-12"
+        >
+          Rent Vehicle
+        </motion.h2>
 
         {/* Vehicles Grid - Show only first 3 items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {vehicles.slice(0, 3).map((vehicle) => (
-            <Link
+            <motion.div
               key={vehicle.id}
-              to={`/vehicle/${vehicle.id}`}
-              className="block"
+              variants={itemVariants}
+              whileHover={{ y: -10, transition: { duration: 0.3 } }}
             >
-              <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
-                <div className="relative">
-                  <img
-                    src={vehicle.image}
-                    alt={vehicle.model}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
-                      {vehicle.type}
-                    </div>
+              <Link to={`/vehicle/${vehicle.id}`} className="block">
+                <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
+                  <div className="relative">
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                      src={vehicle.image}
+                      alt={vehicle.model}
+                      className="w-full h-48 object-cover"
+                    />
+                    <motion.div
+                      initial={{ x: -30, opacity: 0 }}
+                      whileInView={{ x: 0, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                      className="absolute top-3 left-3"
+                    >
+                      <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
+                        {vehicle.type}
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-4 text-center">
+                      {vehicle.model}
+                    </h3>
+
+                    {/* Specs */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                      className="grid grid-cols-3 gap-4 mb-6"
+                    >
+                      <div className="text-center">
+                        <Fuel
+                          className="mx-auto mb-2 text-muted-foreground"
+                          size={20}
+                        />
+                        <div className="text-sm font-medium">
+                          {vehicle.specs.fuel}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Fuel
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <Settings
+                          className="mx-auto mb-2 text-muted-foreground"
+                          size={20}
+                        />
+                        <div className="text-sm font-medium">
+                          {vehicle.specs.transmission}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Transmission
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <Users
+                          className="mx-auto mb-2 text-muted-foreground"
+                          size={20}
+                        />
+                        <div className="text-sm font-medium">
+                          {vehicle.specs.capacity}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Capacity
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Price */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.5 }}
+                      className="text-center mb-6"
+                    >
+                      <span className="text-2xl font-bold text-primary">
+                        {vehicle.price}
+                      </span>
+                      <span className="text-muted-foreground">
+                        /{vehicle.priceUnit}
+                      </span>
+                    </motion.div>
+
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <Button variant="pill" className="w-full">
+                        View Details
+                      </Button>
+                    </motion.div>
                   </div>
                 </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-center">
-                    {vehicle.model}
-                  </h3>
-
-                  {/* Specs */}
-                  <div className="grid grid-cols-3 gap-4 mb-6">
-                    <div className="text-center">
-                      <Fuel
-                        className="mx-auto mb-2 text-muted-foreground"
-                        size={20}
-                      />
-                      <div className="text-sm font-medium">
-                        {vehicle.specs.fuel}
-                      </div>
-                      <div className="text-xs text-muted-foreground">Fuel</div>
-                    </div>
-                    <div className="text-center">
-                      <Settings
-                        className="mx-auto mb-2 text-muted-foreground"
-                        size={20}
-                      />
-                      <div className="text-sm font-medium">
-                        {vehicle.specs.transmission}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Transmission
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <Users
-                        className="mx-auto mb-2 text-muted-foreground"
-                        size={20}
-                      />
-                      <div className="text-sm font-medium">
-                        {vehicle.specs.capacity}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Capacity
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Price */}
-                  <div className="text-center mb-6">
-                    <span className="text-2xl font-bold text-primary">
-                      {vehicle.price}
-                    </span>
-                    <span className="text-muted-foreground">
-                      /{vehicle.priceUnit}
-                    </span>
-                  </div>
-
-                  <Button variant="pill" className="w-full">
-                    View Details
-                  </Button>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* View All Button */}
-        <div className="text-center mt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="text-center mt-12"
+        >
           <Link to="/vehicles">
-            <Button variant="outline" size="lg" className="px-8">
-              View All Vehicles
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button variant="outline" size="lg" className="px-8">
+                View All Vehicles
+              </Button>
+            </motion.div>
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

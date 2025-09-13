@@ -149,7 +149,7 @@ const Tours = () => {
       <Navigation />
 
       <div className="pt-nav">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Header */}
           <div className="mb-8">
             <Link

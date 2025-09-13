@@ -16,6 +16,7 @@ import {
   Calendar,
   Heart,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -285,26 +286,67 @@ const AttractionDetails = () => {
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
 
-      <div className="pt-nav">
-        <div className="container mx-auto px-4 py-8">
+      <motion.div
+        className="pt-nav"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Back Button */}
-          <Link
-            to="/#attractions"
-            className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Attractions
-          </Link>
+          <motion.div variants={itemVariants}>
+            <Link
+              to="/#attractions"
+              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Attractions
+            </Link>
+          </motion.div>
 
           {/* Header Section */}
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8">
+          <motion.div
+            className="flex flex-col md:flex-row md:items-start md:justify-between mb-8"
+            variants={itemVariants}
+          >
             <div>
-              <h1 className="text-4xl font-bold mb-2">{attraction.title}</h1>
-              <div className="flex items-center gap-4 mb-4">
+              <motion.h1
+                className="text-4xl font-bold mb-2"
+                variants={itemVariants}
+              >
+                {attraction.title}
+              </motion.h1>
+              <motion.div
+                className="flex items-center gap-4 mb-4"
+                variants={itemVariants}
+              >
                 <div className="flex items-center">
                   <Star className="w-5 h-5 text-yellow-500 fill-current mr-1" />
                   <span className="font-semibold">{attraction.rating}</span>
@@ -313,47 +355,114 @@ const AttractionDetails = () => {
                   <MapPin className="w-4 h-4 mr-1" />
                   <span>{attraction.location}</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
             {/* <div className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
               {attraction.category}
             </div> */}
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2">
               {/* Hero Image Gallery */}
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {/* Large image */}
-                <div
-                  className="col-span-2 md:col-span-1 md:row-span-2 cursor-pointer"
-                  onClick={() => openLightbox(0)}
-                >
-                  <img
-                    src={attraction.images[0].src}
-                    alt={attraction.images[0].alt}
-                    className="w-full h-64 md:h-full object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                {/* Small images */}
-                {attraction.images.slice(1).map((image, index) => (
+              <motion.div
+                className="grid grid-cols-1 lg:grid-cols-3 gap-1 mb-8 h-[350px]"
+                variants={itemVariants}
+              >
+                {/* Main Featured Image - Left Side */}
+                <div className="lg:col-span-2 h-full">
                   <div
-                    key={index}
-                    className="col-span-1 cursor-pointer"
-                    onClick={() => openLightbox(index + 1)}
+                    className="relative w-full h-full cursor-pointer group overflow-hidden rounded-md"
+                    onClick={() => openLightbox(0)}
                   >
                     <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
+                      src={attraction.images[0].src}
+                      alt={attraction.images[0].alt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Image info overlay */}
+                    <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 className="text-lg font-bold drop-shadow-lg">
+                        {attraction.title}
+                      </h3>
+                      <p className="text-sm text-white/90 drop-shadow-md">
+                        {attraction.location}
+                      </p>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+
+                {/* Thumbnail Grid - Right Side */}
+                <div className="lg:col-span-1 h-full">
+                  <div className="grid grid-cols-2 gap-1 h-full">
+                    {/* Top Left Thumbnail */}
+                    {attraction.images[1] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(1)}
+                      >
+                        <img
+                          src={attraction.images[1].src}
+                          alt={attraction.images[1].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+
+                    {/* Top Right Thumbnail */}
+                    {attraction.images[2] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(2)}
+                      >
+                        <img
+                          src={attraction.images[2].src}
+                          alt={attraction.images[2].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+
+                    {/* Bottom Left Thumbnail */}
+                    {attraction.images[3] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(3)}
+                      >
+                        <img
+                          src={attraction.images[3].src}
+                          alt={attraction.images[3].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+
+                    {/* Bottom Right Thumbnail */}
+                    {attraction.images[4] && (
+                      <div
+                        className="relative cursor-pointer group overflow-hidden rounded-md"
+                        onClick={() => openLightbox(4)}
+                      >
+                        <img
+                          src={attraction.images[4].src}
+                          alt={attraction.images[4].alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
 
               {/* Description Section */}
-              <div className="mb-8">
+              <motion.div className="mb-8" variants={itemVariants}>
                 <h2 className="text-2xl font-bold mb-4">Description</h2>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   {showFullDescription
@@ -366,10 +475,10 @@ const AttractionDetails = () => {
                 >
                   {showFullDescription ? "Read less" : "Read more"}
                 </button>
-              </div>
+              </motion.div>
 
               {/* Highlights Section */}
-              <div className="mb-8">
+              <motion.div className="mb-8" variants={itemVariants}>
                 <h2 className="text-2xl font-bold mb-6">Highlights</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {attraction.highlights.map((highlight, index) => (
@@ -390,7 +499,7 @@ const AttractionDetails = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* CTA Button */}
               {/* <div className="text-center">
@@ -404,7 +513,7 @@ const AttractionDetails = () => {
             </div>
 
             {/* Right Column - Details & Info */}
-            <div className="lg:col-span-1">
+            <motion.div className="lg:col-span-1" variants={itemVariants}>
               <div className="bg-card border rounded-lg p-6 shadow-card sticky top-24">
                 {/* Quick Details */}
                 <div className="mb-6">
@@ -466,7 +575,7 @@ const AttractionDetails = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Lightbox */}
@@ -487,7 +596,7 @@ const AttractionDetails = () => {
             }}
           />
         </div>
-      </div>
+      </motion.div>
 
       <Footer />
     </div>

@@ -1,21 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = useLocation();
 
   const navItems = [
     { label: "ATTRACTIONS", href: "/attractions" },
     { label: "TOUR PLANS", href: "/tours" },
     { label: "RENT VEHICLE", href: "/vehicles" },
-    { label: "CONTACT US", href: "/contact" },
   ];
 
+  // get scroll position
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    setScrollPosition(window.scrollY);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const isScrolled = scrollPosition > 100;
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 nav-glass">
-      <div className="container mx-auto px-4">
+    <nav
+      className={`top-0 left-0 right-0 z-50 nav-glass transition-all duration-300 ${
+        pathname.pathname === "/"
+          ? isScrolled
+            ? "bg-background sticky"
+            : "bg-transparent fixed text-background border-none"
+          : "bg-background sticky"
+      }`}
+    >
+      <div className="container mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between h-nav">
           {/* Logo */}
           <Link to="/">
@@ -28,30 +52,43 @@ const Navigation = () => {
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) =>
               item.href.startsWith("/") ? (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="text-sm font-medium hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </Link>
+                <div key={item.label}>
+                  <Link
+                    to={item.href}
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </div>
               ) : (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-sm font-medium hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </a>
+                <div key={item.label}>
+                  <a
+                    href={item.href}
+                    className="text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </div>
               )
             )}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Link to="/contact">
-              <Button variant="pill-outline" size="sm">
-                Book now
+            <Link to="/attractions">
+              <Button
+                variant="link"
+                size="sm"
+                className={`${
+                  pathname.pathname === "/"
+                    ? isScrolled
+                      ? "text-primary"
+                      : "text-primary-foreground"
+                    : "text-primary"
+                }`}
+              >
+                Explore
+                <ArrowRight size={20} />
               </Button>
             </Link>
           </div>
@@ -68,34 +105,49 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="md:hidden py-4 border-t border-border overflow-hidden">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) =>
                 item.href.startsWith("/") ? (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className="text-sm font-medium hover:text-primary transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
+                  <div key={item.label}>
+                    <Link
+                      to={item.href}
+                      className="text-sm font-medium hover:text-primary transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </div>
                 ) : (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-sm font-medium hover:text-primary transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </a>
+                  <div key={item.label}>
+                    <a
+                      href={item.href}
+                      className="text-sm font-medium hover:text-primary transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  </div>
                 )
               )}
-              <Link to="/contact">
-                <Button variant="pill-outline" size="sm" className="self-start">
-                  Book now
-                </Button>
-              </Link>
+              <div>
+                <Link to="/attractions">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className={`${
+                      pathname.pathname === "/"
+                        ? isScrolled
+                          ? "text-primary"
+                          : "text-primary-foreground"
+                        : "text-primary"
+                    }`}
+                  >
+                    Explore
+                    <ArrowRight size={20} />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         )}

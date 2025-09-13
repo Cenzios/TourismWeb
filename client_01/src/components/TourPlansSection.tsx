@@ -37,9 +37,20 @@ const TourPlansSection = () => {
   ];
 
   return (
-    <section id="tours" className="py-16 bg-muted">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-12">Tour Plans</h2>
+    <section id="tours" className="py-16 relative overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&h=1080&fit=crop&auto=format"
+          alt="Mountain landscape with tea plantations"
+          className="w-full h-full object-cover"
+        />
+        {/* Mask Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/98 via-muted/95 to-muted/90"></div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl px-4 relative z-10">
+        <h2 className="text-4xl font-bold mb-12 text-background">Tour Plans</h2>
 
         {/* Tours Grid - Show only first 3 items */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -72,7 +83,7 @@ const TourPlansSection = () => {
                     {plan.highlights.map((highlight, index) => (
                       <span
                         key={index}
-                        className="bg-secondary/20 text-secondary px-2 py-1 rounded-md text-xs"
+                        className="inline-flex items-center rounded-full border px-3 py-1 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-secondary-foreground hover:bg-secondary/80"
                       >
                         {highlight}
                       </span>

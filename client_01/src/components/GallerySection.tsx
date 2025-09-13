@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MapPin } from "lucide-react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import { motion } from "framer-motion";
 
 const GallerySection = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -85,17 +86,54 @@ const GallerySection = () => {
     setLightboxOpen(true);
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring" as const,
+        damping: 12,
+      },
+    },
+  };
+
   return (
     <section id="gallery" className="py-8 md:py-16 bg-muted">
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-4xl font-bold mb-8 md:mb-12">
+      <div className="container mx-auto max-w-7xl px-4">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-2xl md:text-4xl font-bold mb-8 md:mb-12"
+        >
           Gallery
-        </h2>
+        </motion.h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 auto-rows-[150px] md:auto-rows-[200px]">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-2 auto-rows-[150px] md:auto-rows-[200px]"
+        >
           {galleryImages.map((image, index) => (
-            <div
+            <motion.div
               key={image.id}
+              variants={itemVariants}
               className={`relative overflow-hidden rounded-lg group cursor-pointer ${
                 // Responsive className adjustments for mobile
                 index === 0
@@ -108,25 +146,36 @@ const GallerySection = () => {
               }`}
               onClick={() => openLightbox(index)}
             >
-              <img
+              <motion.img
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.5 }}
                 src={image.src}
                 alt={image.alt}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              />
 
               {/* Location Label (only for first image) */}
               {image.location && (
-                <div className="absolute bottom-4 left-4 flex items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileHover={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute bottom-4 left-4 flex items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
                   <MapPin size={16} className="mr-2" />
                   <span className="text-sm font-medium">{image.location}</span>
-                </div>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Lightbox */}
         <Lightbox

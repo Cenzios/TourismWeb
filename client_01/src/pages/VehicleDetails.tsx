@@ -15,6 +15,7 @@ import {
   Zap,
   Navigation as NavigationIcon,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -227,26 +228,56 @@ const VehicleDetails = () => {
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
 
-      <div className="pt-nav">
-        <div className="container mx-auto px-4 py-8">
+      <motion.div
+        className="pt-nav"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Back Button */}
-          <Link
-            to="/#vehicles"
-            className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Vehicles
-          </Link>
+          <motion.div variants={itemVariants}>
+            <Link
+              to="/#vehicles"
+              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Vehicles
+            </Link>
+          </motion.div>
 
           {/* Main Vehicle Section */}
-          <div className="mb-16">
+          <motion.div className="mb-16" variants={itemVariants}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Left Column - Images */}
-              <div>
+              <motion.div variants={itemVariants}>
                 {/* Main Image */}
                 <div className="mb-4">
                   <img
@@ -278,10 +309,10 @@ const VehicleDetails = () => {
                     </button>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Right Column - Details */}
-              <div>
+              <motion.div variants={itemVariants}>
                 {/* Title & Specs */}
                 <div className="mb-6">
                   <h1 className="text-4xl font-bold mb-2">
@@ -387,108 +418,120 @@ const VehicleDetails = () => {
                     </Button>
                   </Link> */}
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* More Vehicles Section */}
-          <div>
-            <div className="flex items-center justify-between mb-8">
+          <motion.div variants={itemVariants}>
+            <motion.div
+              className="flex items-center justify-between mb-8"
+              variants={itemVariants}
+            >
               <h2 className="text-3xl font-bold">More Vehicles</h2>
               <Link to="/#vehicles">
                 <Button variant="outline" className="rounded-full">
                   View All Vehicles
                 </Button>
               </Link>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {relatedVehicles.map((relatedVehicle) => (
-                <Link
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {relatedVehicles.map((relatedVehicle, index) => (
+                <motion.div
                   key={relatedVehicle.id}
-                  to={`/vehicle/${relatedVehicle.id}`}
-                  className="block"
+                  variants={itemVariants}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
-                    <div className="relative">
-                      <img
-                        src={relatedVehicle.image}
-                        alt={relatedVehicle.model}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
-                          {relatedVehicle.type}
+                  <Link to={`/vehicle/${relatedVehicle.id}`} className="block">
+                    <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
+                      <div className="relative">
+                        <img
+                          src={relatedVehicle.image}
+                          alt={relatedVehicle.model}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="absolute top-3 left-3">
+                          <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
+                            {relatedVehicle.type}
+                          </div>
                         </div>
+                      </div>
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-semibold mb-4 text-center">
+                          {relatedVehicle.model}
+                        </h3>
+
+                        {/* Specs */}
+                        <div className="grid grid-cols-3 gap-4 mb-6">
+                          <div className="text-center">
+                            <Fuel
+                              className="mx-auto mb-2 text-muted-foreground"
+                              size={20}
+                            />
+                            <div className="text-sm font-medium">
+                              {relatedVehicle.specs.fuel}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Fuel
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <Settings
+                              className="mx-auto mb-2 text-muted-foreground"
+                              size={20}
+                            />
+                            <div className="text-sm font-medium">
+                              {relatedVehicle.specs.transmission}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Transmission
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <Users
+                              className="mx-auto mb-2 text-muted-foreground"
+                              size={20}
+                            />
+                            <div className="text-sm font-medium">
+                              {relatedVehicle.specs.capacity}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Capacity
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Price */}
+                        <div className="text-center mb-6">
+                          <span className="text-2xl font-bold text-primary">
+                            {relatedVehicle.price}
+                          </span>
+                          <span className="text-muted-foreground">
+                            /{relatedVehicle.priceUnit}
+                          </span>
+                        </div>
+
+                        <Link to="/contact">
+                          <Button variant="pill" className="w-full">
+                            Call Now
+                          </Button>
+                        </Link>
                       </div>
                     </div>
-
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-4 text-center">
-                        {relatedVehicle.model}
-                      </h3>
-
-                      {/* Specs */}
-                      <div className="grid grid-cols-3 gap-4 mb-6">
-                        <div className="text-center">
-                          <Fuel
-                            className="mx-auto mb-2 text-muted-foreground"
-                            size={20}
-                          />
-                          <div className="text-sm font-medium">
-                            {relatedVehicle.specs.fuel}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            Fuel
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <Settings
-                            className="mx-auto mb-2 text-muted-foreground"
-                            size={20}
-                          />
-                          <div className="text-sm font-medium">
-                            {relatedVehicle.specs.transmission}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            Transmission
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <Users
-                            className="mx-auto mb-2 text-muted-foreground"
-                            size={20}
-                          />
-                          <div className="text-sm font-medium">
-                            {relatedVehicle.specs.capacity}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            Capacity
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Price */}
-                      <div className="text-center mb-6">
-                        <span className="text-2xl font-bold text-primary">
-                          {relatedVehicle.price}
-                        </span>
-                        <span className="text-muted-foreground">
-                          /{relatedVehicle.priceUnit}
-                        </span>
-                      </div>
-
-                      <Link to="/contact">
-                        <Button variant="pill" className="w-full">
-                          Call Now
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Lightbox */}
           <Lightbox
@@ -508,7 +551,7 @@ const VehicleDetails = () => {
             }}
           />
         </div>
-      </div>
+      </motion.div>
 
       <Footer />
     </div>
