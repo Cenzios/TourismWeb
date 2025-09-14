@@ -9,7 +9,6 @@ import {
   Users,
   Settings,
   Phone,
-  Calendar,
   MapPin,
   Shield,
   Zap,
@@ -246,7 +245,7 @@ const VehicleDetails = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       },
     },
   };

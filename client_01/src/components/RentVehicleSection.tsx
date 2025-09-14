@@ -93,7 +93,7 @@ const RentVehicleSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
         >
           {vehicles.slice(0, 3).map((vehicle) => (
             <motion.div
@@ -109,7 +109,7 @@ const RentVehicleSection = () => {
                       transition={{ duration: 0.3 }}
                       src={vehicle.image}
                       alt={vehicle.model}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-32 md:h-48 aspect-square md:aspect-auto object-cover"
                     />
                     <motion.div
                       initial={{ x: -30, opacity: 0 }}
@@ -124,18 +124,18 @@ const RentVehicleSection = () => {
                     </motion.div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-4 text-center">
+                  <div className="p-3 md:p-6">
+                    <h3 className="text-sm md:text-xl font-semibold mb-2 md:mb-4 text-center line-clamp-1">
                       {vehicle.model}
                     </h3>
 
-                    {/* Specs */}
+                    {/* Specs - hidden on mobile */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.4, duration: 0.5 }}
-                      className="grid grid-cols-3 gap-4 mb-6"
+                      className="hidden md:grid grid-cols-3 gap-4 mb-6"
                     >
                       <div className="text-center">
                         <Fuel
@@ -181,19 +181,21 @@ const RentVehicleSection = () => {
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.5 }}
-                      className="text-center mb-6"
+                      className="text-center mb-2 md:mb-6"
                     >
-                      <span className="text-2xl font-bold text-primary">
+                      <span className="text-lg md:text-2xl font-bold text-primary">
                         {vehicle.price}
                       </span>
-                      <span className="text-muted-foreground">
+                      <span className="text-xs md:text-base text-muted-foreground">
                         /{vehicle.priceUnit}
                       </span>
                     </motion.div>
 
+                    {/* Button - hidden on mobile */}
                     <motion.div
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
+                      className="hidden md:block"
                     >
                       <Button variant="pill" className="w-full">
                         View Details

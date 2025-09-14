@@ -1,192 +1,232 @@
-import { useState, useEffect } from "react";
-import { Star, Trophy } from "lucide-react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "./ui/card";
+import { MapPin, Calendar, Car, Plane } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { motion, Variants } from "framer-motion";
 
 const ServiceHighlights = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const navigate = useNavigate();
 
-  // Image array for auto-switching gallery
-  const galleryImages = [
+  // Animation variants for staggered animations
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      y: 50,
+      scale: 0.9,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.6, -0.05, 0.01, 0.99] as any,
+      },
+    },
+  };
+
+  const headerVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      y: -30,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.6, -0.05, 0.01, 0.99] as any,
+      },
+    },
+  };
+
+  const services = [
     {
-      src: "https://happygringo.com/wp-content/uploads/2020/02/bn-happy-clients-slider.jpg",
-      alt: "Parasailing over tropical waters with city skyline",
-      location: "Tropical Adventure",
+      id: 1,
+      title: "Attractions Explore",
+      description:
+        "Discover amazing destinations and hidden gems across Malaysia",
+      icon: MapPin,
+      image:
+        "https://blog.surabilankatravel.com/wp-content/uploads/2023/04/Untitled-design-4.jpg",
+      color: "from-blue-500 to-cyan-500",
+      route: "/attractions",
     },
     {
-      src: "https://travelprofessionalnews.com/wp-content/uploads/2019/09/Oasis-Travel-Network-Feature-for-Travel-Agents.jpg",
-      alt: "Beautiful beach with crystal clear water",
-      location: "Beach Paradise",
+      id: 2,
+      title: "Tour Plans",
+      description: "Customized tour packages for unforgettable experiences",
+      icon: Calendar,
+      image:
+        "https://nzcareerexplorer.com/wp-content/uploads/2024/02/Health-Safety-for-NZ-Tour-Guides-.jpeg",
+      color: "from-green-500 to-emerald-500",
+      route: "/tours",
     },
     {
-      src: "https://heymondo.com/blog/wp-content/uploads/2021/03/shutterstock_757552030_compressed.jpg",
-      alt: "Traditional boat on serene river",
-      location: "Cultural Journey",
+      id: 3,
+      title: "Vehicle Rent",
+      description: "Comfortable and reliable vehicles for your journey",
+      icon: Car,
+      image:
+        "https://bokeradventure.com/wp-content/uploads/2021/10/Safari-4.webp",
+      color: "from-orange-500 to-red-500",
+      route: "/vehicles",
     },
     {
-      src: "https://blog.vincentvacations.com/wp-content/uploads/2023/11/get-more-clients-768x576.jpg",
-      alt: "Ancient temple architecture",
-      location: "Heritage Sites",
+      id: 4,
+      title: "Airport Transfers",
+      description: "Hassle-free airport pickup and drop-off services",
+      icon: Plane,
+      image:
+        "https://res.cloudinary.com/dtljonz0f/image/upload/c_limit,w_1920/f_auto/q_auto/singapore_changi_airport_transfer_zggt3m?_a=BAVARSDW0",
+      color: "from-purple-500 to-pink-500",
+      route: "/contact",
     },
   ];
 
-  // Auto-cycling effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex(
-        (prevIndex) => (prevIndex + 1) % galleryImages.length
-      );
-    }, 4000); // Switch image every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [galleryImages.length]);
+  const handleServiceClick = (route: string) => {
+    navigate(route);
+  };
 
   return (
-    <section className="py-12 md:py-20 relative overflow-hidden bg-gradient-to-br from-green-900 via-green-800 to-green-900">
-      <div className="container mx-auto max-w-7xl px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Left Content - Award/Achievement Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-white"
+    <motion.section
+      className="py-16 px-4 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div className="text-center mb-12" variants={headerVariants}>
+          <motion.h2
+            className="text-4xl font-bold text-gray-900 mb-4"
+            variants={headerVariants}
           >
-            {/* Award Badge */}
-            <motion.div
-              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6"
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                <Trophy size={16} className="text-slate-900" />
-              </div>
-              <span className="text-white font-semibold text-sm">2025</span>
-            </motion.div>
+            Our Premium Services
+          </motion.h2>
+          <motion.p
+            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            variants={headerVariants}
+          >
+            Experience Srilanka like never before with our comprehensive travel
+            services
+          </motion.p>
+        </motion.div>
 
-            {/* Main Heading */}
-            <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Travellers'
-              <br />
-              <span className="text-yellow-400">Choice</span>
-              <br />
-              Best Client Support
-              <br />
-              in Sri Lanka
-            </motion.h2>
-
-            {/* Description */}
-            <motion.p
-              className="text-lg md:text-xl text-white/80 mb-6 md:mb-8 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              We are proud to have a strong relationship with our clients and we
-              are committed to providing the best service to our clients.
-            </motion.p>
-
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <Button
-                variant="secondary"
-                size="lg"
-                className="bg-white text-slate-900 hover:bg-white/90 font-semibold px-8 py-3 text-lg rounded-full"
+        {/* Services Grid */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {services.map((service) => {
+            const IconComponent = service.icon;
+            return (
+              <motion.div
+                key={service.id}
+                variants={cardVariants}
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  transition: {
+                    duration: 0.3,
+                    ease: [0.6, -0.05, 0.01, 0.99] as any,
+                  },
+                }}
+                whileTap={{ scale: 0.98 }}
               >
-                See Our Clients
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Content - Image with Services Overlay */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            {/* Main Hero Image - Auto-Switching Gallery */}
-            <div className="relative h-96 lg:h-[500px] rounded-3xl overflow-hidden">
-              {/* Auto-switching Images - No Animation */}
-              <img
-                src={galleryImages[currentImageIndex].src}
-                alt={galleryImages[currentImageIndex].alt}
-                className="w-full h-full object-cover"
-              />
-
-              {/* Image Overlay for better text contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-
-              {/* Image Info Overlay */}
-              <div className="absolute bottom-4 left-4 text-white">
-                <h3 className="text-lg font-bold drop-shadow-lg">
-                  {galleryImages[currentImageIndex].location}
-                </h3>
-                <p className="text-sm text-white/90 drop-shadow-md">
-                  {galleryImages[currentImageIndex].alt}
-                </p>
-              </div>
-
-              {/* Gallery Indicators */}
-              <div className="absolute bottom-4 right-4 flex gap-2">
-                {galleryImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentImageIndex
-                        ? "bg-white scale-125 shadow-lg"
-                        : "bg-white/50 hover:bg-white/75"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              {/* Auto-play Progress Bar */}
-              <div className="absolute bottom-0 left-0 h-1 bg-white/80 w-full"></div>
-            </div>
-
-            {/* Floating Stats Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className="text-yellow-400 fill-current"
+                <Card
+                  className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border-0 relative aspect-square md:h-72 cursor-pointer"
+                  onClick={() => handleServiceClick(service.route)}
+                >
+                  <CardContent className="p-0 h-full relative">
+                    {/* Background Image */}
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        backgroundImage: `url(${service.image})`,
+                      }}
                     />
-                  ))}
-                </div>
-                <div className="text-right">
-                  <div className="text-xl font-bold text-slate-900">4.9</div>
-                  <div className="text-xs text-slate-600">50k+ reviews</div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
+
+                    {/* Bottom to Top Gradient Mask */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+                    {/* Icon */}
+                    <motion.div
+                      className="absolute top-4 right-4 z-10"
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        delay: 0.5 + service.id * 0.1,
+                        duration: 0.4,
+                        ease: [0.175, 0.885, 0.32, 1.275] as any,
+                      }}
+                    >
+                      <motion.div
+                        className="p-2 bg-white/20 backdrop-blur-sm rounded-full shadow-lg"
+                        whileHover={{
+                          scale: 1.2,
+                          rotate: 15,
+                          backgroundColor: "rgba(255, 255, 255, 0.3)",
+                        }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <IconComponent className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                      </motion.div>
+                    </motion.div>
+
+                    {/* Content Overlay */}
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 p-4 md:p-6 z-10"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        delay: 0.7 + service.id * 0.1,
+                        duration: 0.5,
+                        ease: [0.6, -0.05, 0.01, 0.99] as any,
+                      }}
+                    >
+                      <motion.h3
+                        className="text-lg md:text-xl font-bold text-white mb-2 leading-tight"
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.2 },
+                        }}
+                      >
+                        {service.title}
+                      </motion.h3>
+                      <motion.p
+                        className="text-white/90 text-xs md:text-sm leading-relaxed hidden md:block"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          delay: 0.9 + service.id * 0.1,
+                          duration: 0.4,
+                        }}
+                      >
+                        {service.description}
+                      </motion.p>
+                    </motion.div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

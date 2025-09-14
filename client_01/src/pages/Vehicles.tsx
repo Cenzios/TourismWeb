@@ -299,7 +299,7 @@ const Vehicles = () => {
           </div>
 
           {/* Vehicles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-12">
             {currentVehicles.map((vehicle) => (
               <Link
                 key={vehicle.id}
@@ -311,7 +311,7 @@ const Vehicles = () => {
                     <img
                       src={vehicle.image}
                       alt={vehicle.model}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-32 md:h-48 aspect-square md:aspect-auto object-cover"
                     />
                     <div className="absolute top-3 left-3">
                       <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
@@ -320,17 +320,18 @@ const Vehicles = () => {
                     </div>
                   </div>
 
-                  <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                    <h3 className="text-xl font-semibold mb-2 text-center">
+                  <div className="p-3 md:p-6 flex flex-col h-[calc(100%-8rem)] md:h-[calc(100%-12rem)]">
+                    <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-2 text-center line-clamp-1">
                       {vehicle.model}
                     </h3>
 
-                    <p className="text-muted-foreground text-sm mb-4 flex-grow text-center">
+                    {/* Description - hidden on mobile */}
+                    <p className="hidden md:block text-muted-foreground text-sm mb-4 flex-grow text-center">
                       {vehicle.description}
                     </p>
 
-                    {/* Specs */}
-                    <div className="grid grid-cols-3 gap-4 mb-6">
+                    {/* Specs - hidden on mobile */}
+                    <div className="hidden md:grid grid-cols-3 gap-4 mb-6">
                       <div className="text-center">
                         <Fuel
                           className="mx-auto mb-2 text-muted-foreground"
@@ -370,16 +371,20 @@ const Vehicles = () => {
                     </div>
 
                     {/* Price */}
-                    <div className="text-center mb-6">
-                      <span className="text-2xl font-bold text-primary">
+                    <div className="text-center mb-2 md:mb-6">
+                      <span className="text-lg md:text-2xl font-bold text-primary">
                         {vehicle.price}
                       </span>
-                      <span className="text-muted-foreground">
+                      <span className="text-xs md:text-base text-muted-foreground">
                         /{vehicle.priceUnit}
                       </span>
                     </div>
 
-                    <Button variant="pill" className="w-full mt-auto">
+                    {/* Button - hidden on mobile */}
+                    <Button
+                      variant="pill"
+                      className="w-full mt-auto hidden md:block"
+                    >
                       View Details
                     </Button>
                   </div>

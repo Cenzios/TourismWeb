@@ -177,7 +177,7 @@ const Tours = () => {
           </div>
 
           {/* Tours Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-12">
             {currentTours.map((tour) => (
               <Link key={tour.id} to={`/tour/${tour.id}`} className="block">
                 <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer h-full">
@@ -185,7 +185,7 @@ const Tours = () => {
                     <img
                       src={tour.image}
                       alt={tour.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-32 md:h-48 aspect-square md:aspect-auto object-cover"
                     />
                     <div className="absolute top-3 left-3">
                       <div className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
@@ -195,19 +195,28 @@ const Tours = () => {
                     </div>
                   </div>
 
-                  <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                    <h3 className="text-xl font-semibold mb-2">{tour.title}</h3>
+                  <div className="p-3 md:p-6 flex flex-col h-[calc(100%-8rem)] md:h-[calc(100%-12rem)]">
+                    <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-2">
+                      {tour.title}
+                    </h3>
 
-                    <p className="text-muted-foreground text-sm mb-4 flex-grow">
+                    {/* Description - hidden on mobile */}
+                    <p className="hidden md:block text-muted-foreground text-sm mb-4 flex-grow">
                       {tour.description}
                     </p>
 
-                    <div className="flex items-center text-muted-foreground mb-4">
-                      <MapPin size={16} className="mr-2" />
-                      <span className="text-sm">{tour.location}</span>
+                    <div className="flex items-center text-muted-foreground mb-2 md:mb-4">
+                      <MapPin
+                        size={12}
+                        className="mr-1 md:mr-2 md:w-4 md:h-4"
+                      />
+                      <span className="text-xs md:text-sm line-clamp-1">
+                        {tour.location}
+                      </span>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    {/* Highlights - hidden on mobile */}
+                    <div className="hidden md:flex flex-wrap gap-2 mb-4">
                       {tour.highlights.map((highlight, index) => (
                         <span
                           key={index}
@@ -218,18 +227,22 @@ const Tours = () => {
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-2 md:mb-4">
                       <div>
-                        <span className="text-2xl font-bold text-primary">
+                        <span className="text-lg md:text-2xl font-bold text-primary">
                           {tour.price}
                         </span>
-                        <span className="text-muted-foreground">
+                        <span className="text-xs md:text-base text-muted-foreground">
                           /{tour.priceUnit}
                         </span>
                       </div>
                     </div>
 
-                    <Button variant="pill" className="w-full mt-auto">
+                    {/* Button - hidden on mobile */}
+                    <Button
+                      variant="pill"
+                      className="w-full mt-auto hidden md:block"
+                    >
                       View Details
                     </Button>
                   </div>

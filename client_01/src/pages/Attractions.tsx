@@ -231,7 +231,7 @@ const Attractions = () => {
           </div>
 
           {/* Attractions Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-12">
             {currentAttractions.map((attraction) => (
               <Link
                 key={attraction.id}
@@ -243,7 +243,7 @@ const Attractions = () => {
                     <img
                       src={attraction.image}
                       alt={attraction.title}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-32 md:h-48 aspect-square md:aspect-auto object-cover"
                     />
                     <div className="absolute top-3 left-3">
                       <div className="bg-foreground text-background px-2 py-1 rounded-md text-sm font-medium flex items-center gap-1">
@@ -262,20 +262,32 @@ const Attractions = () => {
                     </div>
                   </div>
 
-                  <div className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                    <h3 className="text-xl font-semibold mb-2">
+                  <div className="p-3 md:p-6 flex flex-col h-[calc(100%-8rem)] md:h-[calc(100%-12rem)]">
+                    <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-2">
                       {attraction.title}
                     </h3>
-                    <p className="text-muted-foreground mb-4 leading-relaxed flex-grow text-sm">
+
+                    {/* Description - hidden on mobile */}
+                    <p className="hidden md:block text-muted-foreground mb-4 leading-relaxed flex-grow text-sm">
                       {attraction.description}
                     </p>
 
-                    <div className="flex items-center text-muted-foreground mb-4">
-                      <MapPin size={16} className="mr-2" />
-                      <span className="text-sm">{attraction.location}</span>
+                    <div className="flex items-center text-muted-foreground mb-2 md:mb-4">
+                      <MapPin
+                        size={12}
+                        className="mr-1 md:mr-2 md:w-4 md:h-4"
+                      />
+                      <span className="text-xs md:text-sm line-clamp-1">
+                        {attraction.location}
+                      </span>
                     </div>
 
-                    <Button variant="pill" size="sm" className="w-full mt-auto">
+                    {/* Button - hidden on mobile */}
+                    <Button
+                      variant="pill"
+                      size="sm"
+                      className="w-full mt-auto hidden md:block"
+                    >
                       View Details
                     </Button>
                   </div>

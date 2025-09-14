@@ -9,11 +9,11 @@ const HeroSection = () => {
 
   // Array of background images
   const backgroundImages = [
-    "https://picsum.photos/id/1036/1920/1080", // Mountain landscape
-    "https://picsum.photos/id/1015/1920/1080", // Beach scene
-    "https://picsum.photos/id/1018/1920/1080", // Forest path
-    "https://picsum.photos/id/1025/1920/1080", // City skyline
-    "https://picsum.photos/id/1039/1920/1080", // Sunset view
+    "https://cdn.shopify.com/s/files/1/0026/2894/3925/t/20/assets/pf-96a910ba--surfingsrilanka1.jpg?v=1622922626", 
+    "https://www.shenaliwaduge.com/wp-content/uploads/2021/11/tiger-srilanka-holidays-tours-2.jpg",
+    "https://live.staticflickr.com/2185/32749733106_b1d9c24d3f_b.jpg",
+    "https://wallpaperaccess.com/full/3558943.jpg",
+    "https://www.lovidhu.com/uploads/posts-seo/2021/02/ambuluwawa-tower-gampola-kandy-sri-lanka.jpg"
   ];
 
   // Auto-cycle through images
@@ -28,7 +28,7 @@ const HeroSection = () => {
   }, [backgroundImages.length]);
 
   return (
-    <section className="relative h-hero flex items-center justify-center overflow-hidden">
+    <section className="relative h-[60vh] md:h-hero flex items-center justify-center overflow-hidden">
       {/* Background Image Switcher */}
       <div className="absolute inset-0">
         {backgroundImages.map((image, index) => (
@@ -70,7 +70,7 @@ const HeroSection = () => {
             type: "spring",
             stiffness: 50,
           }}
-          className="text-5xl md:text-7xl font-bold mb-8 drop-shadow-lg"
+          className="text-5xl md:text-7xl font-bold max-md:mt-16 mb-8 drop-shadow-lg"
         >
           Travel memories
           <br />
