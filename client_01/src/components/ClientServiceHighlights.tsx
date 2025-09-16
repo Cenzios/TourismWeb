@@ -42,7 +42,7 @@ const ClientServiceHighlights = () => {
   }, [galleryImages.length]);
 
   return (
-    <section className="py-12 md:py-20 relative overflow-hidden bg-gradient-to-br from-green-900 via-green-800 to-green-900">
+    <section className="py-12 md:py-20 relative overflow-hidden bg-gradient-to-br from-coral-orange/90 via-coral-orange to-coral-orange/90">
       <div className="container mx-auto max-w-7xl px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Content - Award/Achievement Section */}

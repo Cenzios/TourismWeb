@@ -50,7 +50,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* Brand Info */}
             <div className="lg:col-span-2">
-              <div className="text-2xl font-bold tracking-wider mb-4">
+              <div className="text-2xl font-bold tracking-wider mb-4 font-serif">
                 TRAVORA
               </div>
               <p className="text-background/80 mb-6 leading-relaxed">

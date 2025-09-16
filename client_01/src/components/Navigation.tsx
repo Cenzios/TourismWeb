@@ -43,7 +43,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-nav">
           {/* Logo */}
           <Link to="/">
-            <div className="text-2xl font-bold tracking-wider">
+            <div className="text-2xl font-bold tracking-wider font-serif">
               <span>TRAVORA</span>
             </div>
           </Link>

@@ -51,8 +51,8 @@ const WhatWeOffer = () => {
                 <CardContent className="p-8 text-center">
                   {/* Icon Container */}
                   <div className="mb-6 flex justify-center">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-green-50 transition-colors duration-300">
-                      <IconComponent className="w-8 h-8 text-gray-700 group-hover:text-green-600 transition-colors duration-300" />
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-coral-orange/10 transition-colors duration-300">
+                      <IconComponent className="w-8 h-8 text-gray-700 group-hover:text-coral-orange transition-colors duration-300" />
                     </div>
                   </div>
 
@@ -82,8 +82,8 @@ const WhatWeOffer = () => {
                   <CardContent className="p-3 text-center">
                     {/* Icon Container */}
                     <div className="mb-2 flex justify-center">
-                      <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-green-50 transition-colors duration-300">
-                        <IconComponent className="w-4 h-4 text-gray-700 group-hover:text-green-600 transition-colors duration-300" />
+                      <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-coral-orange/10 transition-colors duration-300">
+                        <IconComponent className="w-4 h-4 text-gray-700 group-hover:text-coral-orange transition-colors duration-300" />
                       </div>
                     </div>
 

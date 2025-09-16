@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin, ArrowUpRight } from "lucide-react";
+import { Star, MapPin, ArrowLeft, ArrowRight, Navigation } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const AttractionsSection = () => {
   const [activeFilter, setActiveFilter] = useState("All");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const filters = [
     "All",
@@ -26,6 +27,7 @@ const AttractionsSection = () => {
       rating: 4.9,
       image: "https://picsum.photos/id/106/1200/700",
       category: "Culture",
+      categoryLabel: "CULTURAL SITES",
     },
     {
       id: 2,
@@ -36,6 +38,7 @@ const AttractionsSection = () => {
       rating: 4.8,
       image: "https://picsum.photos/id/111/1200/700",
       category: "Beaches",
+      categoryLabel: "COASTAL DESTINATIONS",
     },
     {
       id: 3,
@@ -46,6 +49,40 @@ const AttractionsSection = () => {
       rating: 4.9,
       image: "https://picsum.photos/id/120/1200/700",
       category: "Culture",
+      categoryLabel: "CULTURAL SITES",
+    },
+    {
+      id: 4,
+      title: "Kandy City",
+      description:
+        "Cultural capital featuring the sacred Temple of the Tooth and colonial architecture.",
+      location: "Kandy, Sri Lanka",
+      rating: 4.7,
+      image: "https://picsum.photos/id/128/1200/700",
+      category: "Cities",
+      categoryLabel: "HERITAGE CITIES",
+    },
+    {
+      id: 5,
+      title: "Adam's Peak",
+      description:
+        "Sacred mountain offering spectacular sunrise views and spiritual significance.",
+      location: "Central Province, Sri Lanka",
+      rating: 4.8,
+      image: "https://picsum.photos/id/130/1200/700",
+      category: "Mountains",
+      categoryLabel: "MOUNTAIN PEAKS",
+    },
+    {
+      id: 6,
+      title: "Galle Fort",
+      description:
+        "Historic Dutch colonial fortress with charming cobblestone streets and ocean views.",
+      location: "Galle, Sri Lanka",
+      rating: 4.6,
+      image: "https://picsum.photos/id/135/1200/700",
+      category: "Culture",
+      categoryLabel: "CULTURAL SITES",
     },
   ];
 
@@ -55,6 +92,24 @@ const AttractionsSection = () => {
       : attractions.filter(
           (attraction) => attraction.category === activeFilter
         );
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -400,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 400,
+        behavior: "smooth",
+      });
+    }
+  };
 
   // Animation variants
   const containerVariants = {
@@ -85,163 +140,168 @@ const AttractionsSection = () => {
   };
 
   return (
-    <section id="attractions" className="py-16 relative overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&auto=format"
-          alt="Beautiful Sri Lankan landscape"
-          className="w-full h-full object-cover"
-        />
-        {/* Mask Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85"></div>
-      </div>
-
-      <div className="container mx-auto max-w-7xl px-4 relative z-10">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold mb-8"
-        >
-          Attractions
-        </motion.h2>
-
-        {/* Filter Tabs */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="flex flex-wrap gap-2 mb-12"
-        >
-          {filters.map((filter, index) => (
-            <motion.div
-              key={filter}
-              variants={filterVariants}
-              whileHover="hover"
-              whileTap="tap"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <Button
-                variant={activeFilter === filter ? "default" : "outline"}
-                size="sm"
-                onClick={() => setActiveFilter(filter)}
-                className="rounded-full"
-              >
-                {filter}
-              </Button>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Attractions Grid - Show only first 6 items */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
-        >
-          {filteredAttractions.slice(0, 6).map((attraction) => (
-            <motion.div
-              key={attraction.id}
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-            >
-              <Link to={`/attraction/${attraction.id}`} className="block">
-                <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
-                  <div className="relative">
-                    <motion.img
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                      src={attraction.image}
-                      alt={attraction.title}
-                      className="w-full h-32 md:h-48 aspect-square md:aspect-auto object-cover"
-                    />
-                    <div className="absolute top-3 right-3">
-                      <motion.div
-                        whileHover={{ rotate: 45 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ArrowUpRight
-                          className="text-background bg-foreground/20 rounded-full p-1"
-                          size={24}
-                        />
-                      </motion.div>
-                    </div>
-                    <div className="absolute top-3 left-3">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-foreground text-background px-2 py-1 rounded-md text-sm font-medium flex items-center gap-1"
-                      >
-                        <Star
-                          className="rating-star"
-                          size={14}
-                          fill="currentColor"
-                        />
-                        {attraction.rating}
-                      </motion.div>
-                    </div>
-                  </div>
-
-                  <div className="p-3 md:p-6">
-                    <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-2">
-                      {attraction.title}
-                    </h3>
-
-                    {/* Description - hidden on mobile */}
-                    <p className="hidden md:block text-muted-foreground mb-4 leading-relaxed">
-                      {attraction.description}
-                    </p>
-
-                    <div className="flex items-center text-muted-foreground mb-2 md:mb-4">
-                      <MapPin
-                        size={12}
-                        className="mr-1 md:mr-2 md:w-4 md:h-4"
-                      />
-                      <span className="text-xs md:text-sm line-clamp-1">
-                        {attraction.location}
-                      </span>
-                    </div>
-
-                    {/* Button - hidden on mobile */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="hidden md:block"
-                    >
-                      <Button variant="pill" size="sm" className="w-full">
-                        View Details
-                      </Button>
-                    </motion.div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* View All Button */}
+    <section id="attractions" className="py-4 bg-gray-50">
+      <div className="">
+        {/* White Card Container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="text-center mt-12"
+          transition={{ duration: 0.6 }}
+          className="bg-white ms-[8%] rounded-s-2xl py-8 md:py-12 ps-8 md:ps-12 shadow-lg"
         >
-          <Link to="/attractions">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" size="lg" className="px-8">
-                View All Attractions
-              </Button>
+          {/* Header Section */}
+          <div className="text-center mb-12 me-[14%]">
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-coral-orange text-sm font-semibold uppercase tracking-wide mb-3"
+            >
+              WHERE TO GO
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-3xl md:text-4xl font-bold text-gray-900 font-serif"
+            >
+              Sri Lankan Destinations
+            </motion.h2>
+          </div>
+
+          {/* Horizontal Scrollable Cards Container */}
+          <div className="relative">
+            <motion.div
+              ref={scrollContainerRef}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="flex gap-4 pe-4 rounded-s-2xl md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
+              style={{ scrollSnapType: "x mandatory" }}
+            >
+              {attractions.slice(0, 6).map((attraction, index) => (
+                <motion.div
+                  key={attraction.id}
+                  variants={itemVariants}
+                  className="flex-none w-40 sm:w-48 md:w-56 snap-start"
+                  whileHover={{ y: -3 }}
+                >
+                  <Link
+                    to={`/attraction/${attraction.id}`}
+                    className="block group"
+                  >
+                    <div className="text-center">
+                      {/* Image */}
+                      <div className="relative mb-4">
+                        <motion.img
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 0.3 }}
+                          src={attraction.image}
+                          alt={attraction.title}
+                          className="w-full h-44 sm:h-56 md:h-64 object-cover rounded-xl"
+                        />
+                        {/* Rating Badge */}
+                        <div className="absolute top-3 left-3">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-gray-900 text-white px-2 py-1 rounded-lg text-sm font-medium flex items-center gap-1"
+                          >
+                            <Star
+                              className="text-yellow-400"
+                              size={14}
+                              fill="currentColor"
+                            />
+                            {attraction.rating}
+                          </motion.div>
+                        </div>
+                      </div>
+
+                      {/* Category Label */}
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.2 }}
+                        className="text-coral-orange text-xs font-semibold uppercase tracking-wider mb-2"
+                      >
+                        {attraction.categoryLabel}
+                      </motion.p>
+
+                      {/* Title */}
+                      <motion.h3
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.3 }}
+                        className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-coral-orange transition-colors duration-200 line-clamp-2"
+                      >
+                        {attraction.title}
+                      </motion.h3>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
             </motion.div>
-          </Link>
+            {/* Navigation Controls */}
+            <div className="flex flex-col me-[14%] sm:flex-row justify-between items-center mt-8 gap-4 sm:gap-0">
+              {/* See All Button */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              >
+                <Link to="/attractions">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      variant="outline"
+                      className="rounded-full border-coral-orange text-coral-orange hover:bg-coral-orange hover:text-coral-orange-foreground transition-colors duration-200 px-6 py-2"
+                    >
+                      <Navigation className="w-4 h-4 mr-2" />
+                      See all destinations
+                    </Button>
+                  </motion.div>
+                </Link>
+              </motion.div>
+
+              {/* Arrow Navigation */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="flex items-center gap-3"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={scrollLeft}
+                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
+                >
+                  <ArrowLeft className="w-5 h-5 text-gray-600 group-hover:text-white" />
+                </motion.button>
+
+                <div className="w-8 h-px bg-gray-300"></div>
+
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={scrollRight}
+                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
+                >
+                  <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white" />
+                </motion.button>
+              </motion.div>
+            </div>
+          </div>
+
         </motion.div>
       </div>
     </section>

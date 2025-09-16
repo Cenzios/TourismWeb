@@ -1,8 +1,19 @@
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Clock, MapPin } from "lucide-react";
+import {
+  Clock,
+  MapPin,
+  Star,
+  ArrowLeft,
+  ArrowRight,
+  Navigation,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const TourPlansSection = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const tourPlans = [
     {
       id: 1,
@@ -13,6 +24,8 @@ const TourPlansSection = () => {
       location: "Southern Province, Sri Lanka",
       image: "https://picsum.photos/id/99/1200/700",
       highlights: ["Beaches", "Wildlife", "Cultural Sites"],
+      rating: 4.8,
+      categoryLabel: "ADVENTURE TOURS",
     },
     {
       id: 2,
@@ -23,6 +36,8 @@ const TourPlansSection = () => {
       location: "Central Province, Sri Lanka",
       image: "https://picsum.photos/id/101/1200/700",
       highlights: ["Ancient Cities", "Temples", "Heritage Sites"],
+      rating: 4.9,
+      categoryLabel: "CULTURAL TOURS",
     },
     {
       id: 3,
@@ -33,97 +48,274 @@ const TourPlansSection = () => {
       location: "Central Highlands, Sri Lanka",
       image: "https://picsum.photos/id/110/1200/700",
       highlights: ["Tea Plantations", "Mountains", "Scenic Railways"],
+      rating: 4.7,
+      categoryLabel: "NATURE TOURS",
+    },
+    {
+      id: 4,
+      title: "Colombo City Tour",
+      duration: "1 day",
+      price: "Rs 15,000",
+      priceUnit: "Person",
+      location: "Colombo, Sri Lanka",
+      image: "https://picsum.photos/id/115/1200/700",
+      highlights: ["City Landmarks", "Shopping", "Local Cuisine"],
+      rating: 4.5,
+      categoryLabel: "CITY TOURS",
+    },
+    {
+      id: 5,
+      title: "Wildlife Safari",
+      duration: "2 days",
+      price: "Rs 28,000",
+      priceUnit: "Person",
+      location: "Yala National Park, Sri Lanka",
+      image: "https://picsum.photos/id/125/1200/700",
+      highlights: ["Leopards", "Elephants", "Bird Watching"],
+      rating: 4.9,
+      categoryLabel: "WILDLIFE TOURS",
+    },
+    {
+      id: 6,
+      title: "Coastal Paradise",
+      duration: "4 days",
+      price: "Rs 42,000",
+      priceUnit: "Person",
+      location: "South Coast, Sri Lanka",
+      image: "https://picsum.photos/id/140/1200/700",
+      highlights: ["Beach Resorts", "Water Sports", "Sunset Views"],
+      rating: 4.6,
+      categoryLabel: "COASTAL TOURS",
     },
   ];
 
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -400,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 400,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
-    <section id="tours" className="py-16 relative overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&h=1080&fit=crop&auto=format"
-          alt="Mountain landscape with tea plantations"
-          className="w-full h-full object-cover"
-        />
-        {/* Mask Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-muted/98 via-muted/95 to-muted/90"></div>
-      </div>
+    <section id="tours" className="py-4 bg-gray-50">
+      <div className="">
+        {/* White Card Container */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-white me-[8%] rounded-e-2xl py-8 md:py-12 pe-8 md:pe-12 ps-2 md:ps-4 shadow-lg"
+        >
+          {/* Header Section */}
+          <div className="text-center mb-12 ms-[14%]">
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-coral-orange text-sm font-semibold uppercase tracking-wide mb-3"
+            >
+              TRAVEL PLANS
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-3xl md:text-4xl font-bold text-gray-900 font-serif"
+            >
+              Tour Packages
+            </motion.h2>
+          </div>
 
-      <div className="container mx-auto max-w-7xl px-4 relative z-10">
-        <h2 className="text-4xl font-bold mb-12 text-background">Tour Plans</h2>
+          {/* Horizontal Scrollable Cards Container */}
+          <div className="relative">
+            <motion.div
+              ref={scrollContainerRef}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="flex gap-4 rounded-2xl md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
+              style={{ scrollSnapType: "x mandatory" }}
+            >
+              {tourPlans.slice(0, 6).map((plan, index) => (
+                <motion.div
+                  key={plan.id}
+                  variants={itemVariants}
+                  className="flex-none w-40 sm:w-48 md:w-56 snap-start"
+                  whileHover={{ y: -3 }}  
+                >
+                  <Link to={`/tour/${plan.id}`} className="block group">
+                    <div className="text-center">
+                      {/* Image */}
+                      <div className="relative mb-4">
+                        <motion.img
+                          whileHover={{ scale: 1.02 }}
+                          transition={{ duration: 0.3 }}
+                          src={plan.image}
+                          alt={plan.title}
+                          className="w-full h-44 sm:h-56 md:h-64 object-cover rounded-xl"
+                        />
+                        {/* Rating Badge */}
+                        <div className="absolute top-3 left-3">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-gray-900 text-white px-2 py-1 rounded-lg text-sm font-medium flex items-center gap-1"
+                          >
+                            <Star
+                              className="text-yellow-400"
+                              size={14}
+                              fill="currentColor"
+                            />
+                            {plan.rating}
+                          </motion.div>
+                        </div>
+                        {/* Duration Badge */}
+                        <div className="absolute top-3 right-3">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: index * 0.1 + 0.1 }}
+                            className="bg-coral-orange text-white px-2 py-1 rounded-lg text-sm font-medium flex items-center gap-1"
+                          >
+                            <Clock size={14} />
+                            {plan.duration}
+                          </motion.div>
+                        </div>
+                      </div>
 
-        {/* Tours Grid - Show only first 3 items */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-          {tourPlans.slice(0, 3).map((plan) => (
-            <Link key={plan.id} to={`/tour/${plan.id}`} className="block">
-              <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
-                <div className="relative">
-                  <img
-                    src={plan.image}
-                    alt={plan.title}
-                    className="w-full h-32 md:h-48 aspect-square md:aspect-auto object-cover"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <div className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                      <Clock size={14} />
-                      {plan.duration}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-3 md:p-6">
-                  <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-2">
-                    {plan.title}
-                  </h3>
-
-                  <div className="flex items-center text-muted-foreground mb-2 md:mb-4">
-                    <MapPin size={12} className="mr-1 md:mr-2 md:w-4 md:h-4" />
-                    <span className="text-xs md:text-sm line-clamp-1">
-                      {plan.location}
-                    </span>
-                  </div>
-
-                  {/* Highlights - hidden on mobile */}
-                  <div className="hidden md:flex flex-wrap gap-2 mb-4">
-                    {plan.highlights.map((highlight, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center rounded-full border px-3 py-1 text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-secondary-foreground hover:bg-secondary/80"
+                      {/* Category Label */}
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.2 }}
+                        className="text-coral-orange text-xs font-semibold uppercase tracking-wider mb-2"
                       >
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
+                        {plan.categoryLabel}
+                      </motion.p>
 
-                  <div className="flex items-center justify-between mb-2 md:mb-4">
-                    <div>
-                      <span className="text-lg md:text-2xl font-bold text-primary">
-                        {plan.price}
-                      </span>
-                      <span className="text-xs md:text-base text-muted-foreground">
-                        /{plan.priceUnit}
-                      </span>
+                      {/* Title */}
+                      <motion.h3
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.3 }}
+                        className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-coral-orange transition-colors duration-200 line-clamp-2 mb-2"
+                      >
+                        {plan.title}
+                      </motion.h3>
+
+                      {/* Price */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.4 }}
+                        className="text-coral-orange font-bold"
+                      >
+                        <span className="text-lg">{plan.price}</span>
+                        <span className="text-sm text-gray-500">
+                          /{plan.priceUnit}
+                        </span>
+                      </motion.div>
                     </div>
-                  </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
 
-                  {/* Button - hidden on mobile */}
-                  <Button variant="pill" className="w-full hidden md:block">
-                    View Details
-                  </Button>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+            {/* Navigation Controls */}
+            <div className="flex flex-col ms-[14%] sm:flex-row justify-between items-center mt-8 gap-4 sm:gap-0">
+              {/* See All Button */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              >
+                <Link to="/tours">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      variant="outline"
+                      className="rounded-full border-coral-orange text-coral-orange hover:bg-coral-orange hover:text-coral-orange-foreground transition-colors duration-200 px-6 py-2"
+                    >
+                      <Navigation className="w-4 h-4 mr-2" />
+                      See all tours
+                    </Button>
+                  </motion.div>
+                </Link>
+              </motion.div>
 
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          <Link to="/tours">
-            <Button variant="outline" size="lg" className="px-8">
-              View All Tours
-            </Button>
-          </Link>
-        </div>
+              {/* Arrow Navigation */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="flex items-center gap-3"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={scrollLeft}
+                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
+                >
+                  <ArrowLeft className="w-5 h-5 text-gray-600 group-hover:text-white" />
+                </motion.button>
+
+                <div className="w-8 h-px bg-gray-300"></div>
+
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={scrollRight}
+                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
+                >
+                  <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white" />
+                </motion.button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

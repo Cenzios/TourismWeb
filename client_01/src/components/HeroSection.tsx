@@ -78,7 +78,7 @@ const HeroSection = () => {
         </motion.h1>
 
         {/* Primary CTA */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -95,7 +95,7 @@ const HeroSection = () => {
               </Button>
             </motion.div>
           </Link>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

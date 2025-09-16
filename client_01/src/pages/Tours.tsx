@@ -1,24 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Clock,
-  MapPin,
-  ArrowLeft,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Clock, MapPin, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { motion } from "framer-motion";
 
 const Tours = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const [displayedItems, setDisplayedItems] = useState(6);
+  const [loading, setLoading] = useState(false);
+  const observer = useRef<IntersectionObserver>();
 
-  // Scroll to top when component mounts or page changes
+  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, []);
 
   // Extended tour data - in a real app, this would come from an API with pagination
   const allTours = [
@@ -132,17 +128,28 @@ const Tours = () => {
     },
   ];
 
-  // Calculate pagination
-  const totalPages = Math.ceil(allTours.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentTours = allTours.slice(startIndex, endIndex);
+  // Get currently displayed tours
+  const currentTours = allTours.slice(0, displayedItems);
+  const hasMoreItems = displayedItems < allTours.length;
 
-  const goToPage = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  // Infinite scroll functionality
+  const lastItemRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMoreItems) {
+          setLoading(true);
+          setTimeout(() => {
+            setDisplayedItems((prev) => Math.min(prev + 6, allTours.length));
+            setLoading(false);
+          }, 500);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMoreItems, allTours.length]
+  );
 
   return (
     <div className="min-h-screen">
@@ -169,8 +176,8 @@ const Tours = () => {
               </div>
               <div className="mt-4 md:mt-0">
                 <span className="text-sm text-muted-foreground">
-                  Showing {startIndex + 1}-{Math.min(endIndex, allTours.length)}{" "}
-                  of {allTours.length} tours
+                  Showing {Math.min(displayedItems, allTours.length)} of{" "}
+                  {allTours.length} tours
                 </span>
               </div>
             </div>
@@ -251,46 +258,25 @@ const Tours = () => {
             ))}
           </div>
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="flex items-center gap-2"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                Previous
-              </Button>
-
-              <div className="flex items-center space-x-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (page) => (
-                    <Button
-                      key={page}
-                      variant={currentPage === page ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => goToPage(page)}
-                      className="w-10 h-10"
-                    >
-                      {page}
-                    </Button>
-                  )
-                )}
+          {/* Loading State */}
+          {loading && (
+            <div className="flex justify-center py-12">
+              <div className="flex items-center space-x-3">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-coral-orange"></div>
+                <span className="text-gray-600 font-medium">
+                  Loading more tours...
+                </span>
               </div>
+            </div>
+          )}
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="flex items-center gap-2"
-              >
-                Next
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+          {/* End of Results */}
+          {!hasMoreItems && currentTours.length > 0 && (
+            <div className="text-center py-12">
+              <div className="w-px h-12 bg-gray-300 mx-auto mb-4"></div>
+              <p className="text-gray-500 font-medium">
+                You've reached the end of our tours
+              </p>
             </div>
           )}
         </div>

@@ -1,8 +1,14 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -14,8 +20,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: "var(--font-heading)",
-        body: "var(--font-body)",
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Playfair Display", "Georgia", "Times New Roman", "serif"],
+        heading: ["Playfair Display", "Georgia", "Times New Roman", "serif"],
+        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,6 +65,10 @@ export default {
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
         "rating-star": "hsl(var(--rating-star))",
+        "coral-orange": {
+          DEFAULT: "hsl(var(--coral-orange))",
+          foreground: "hsl(var(--coral-orange-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -114,5 +126,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
