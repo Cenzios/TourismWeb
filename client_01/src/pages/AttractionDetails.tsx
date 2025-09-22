@@ -19,6 +19,7 @@ import {
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
 
 const AttractionDetails = () => {
   const { id } = useParams();
@@ -578,6 +579,105 @@ const AttractionDetails = () => {
             </motion.div>
           </div>
 
+          {/* More Attractions Section */}
+          <motion.div variants={itemVariants}>
+            <motion.div
+              className="flex items-center justify-between my-8"
+              variants={itemVariants}
+            >
+              <h2 className="text-3xl font-bold">More Attractions</h2>
+            
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {[
+                {
+                  id: 1,
+                  title: "Nine Arch Bridge",
+                  location: "Ella, Sri Lanka",
+                  image: "https://picsum.photos/id/106/400/300",
+                  rating: 4.9,
+                  category: "Culture",
+                },
+                {
+                  id: 2,
+                  title: "Mirissa Beach",
+                  location: "Mirissa, Sri Lanka",
+                  image: "https://picsum.photos/id/101/400/300",
+                  rating: 4.8,
+                  category: "Beaches",
+                },
+                {
+                  id: 3,
+                  title: "Sigiriya Rock",
+                  location: "Sigiriya, Sri Lanka",
+                  image: "https://picsum.photos/id/110/400/300",
+                  rating: 4.9,
+                  category: "Culture",
+                },
+              ]
+                .filter((item) => item.id !== attraction.id)
+                .map((relatedAttraction, index) => (
+                  <motion.div
+                    key={relatedAttraction.id}
+                    variants={itemVariants}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Link
+                      to={`/attraction/${relatedAttraction.id}`}
+                      className="block"
+                    >
+                      <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
+                        <div className="relative">
+                          <img
+                            src={relatedAttraction.image}
+                            alt={relatedAttraction.title}
+                            className="w-full h-48 object-cover"
+                          />
+                          <div className="absolute top-3 left-3">
+                            <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
+                              {relatedAttraction.category}
+                            </div>
+                          </div>
+                          <div className="absolute top-3 right-3">
+                            <div className="bg-background/80 backdrop-blur-sm px-2 py-1 rounded-md text-sm font-medium flex items-center gap-1">
+                              <Star className="w-3 h-3 text-yellow-500 fill-current" />
+                              {relatedAttraction.rating}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="p-6">
+                          <h3 className="text-xl font-semibold mb-2">
+                            {relatedAttraction.title}
+                          </h3>
+                          <div className="flex items-center gap-2 text-muted-foreground mb-4">
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-sm">
+                              {relatedAttraction.location}
+                            </span>
+                          </div>
+
+                          <Link to="/contact">
+                            <Button variant="pill" className="w-full">
+                              Learn More
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+            </motion.div>
+          </motion.div>
+
           {/* Lightbox */}
           <Lightbox
             open={lightboxOpen}
@@ -599,6 +699,9 @@ const AttractionDetails = () => {
       </motion.div>
 
       <Footer />
+
+      {/* Mobile Back Button */}
+      <BackButton to="/#attractions" text="Back to Attractions" />
     </div>
   );
 };

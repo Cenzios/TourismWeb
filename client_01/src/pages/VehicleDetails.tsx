@@ -17,6 +17,7 @@ import {
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
 
 const VehicleDetails = () => {
   const { id } = useParams();
@@ -553,6 +554,9 @@ const VehicleDetails = () => {
       </motion.div>
 
       <Footer />
+
+      {/* Mobile Back Button */}
+      <BackButton to="/#vehicles" text="Back to Vehicles" />
     </div>
   );
 };

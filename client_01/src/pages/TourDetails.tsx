@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import BackButton from "@/components/BackButton";
 
 const TourDetails = () => {
   const { id } = useParams();
@@ -537,6 +538,93 @@ const TourDetails = () => {
             </div>
           </div>
 
+          {/* More Tours Section */}
+          <div className="mb-16">
+            <div className="flex items-center justify-between my-8">
+              <h2 className="text-3xl font-bold">More Tours</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  id: 1,
+                  title: "Down-South Tour",
+                  location: "Galle, Unawatuna, Mirissa",
+                  duration: "3 days",
+                  price: "Rs 35,000",
+                  image: "https://picsum.photos/id/99/400/300",
+                },
+                {
+                  id: 2,
+                  title: "Cultural Triangle",
+                  location: "Sigiriya, Dambulla, Polonnaruwa",
+                  duration: "4 days",
+                  price: "Rs 45,000",
+                  image: "https://picsum.photos/id/101/400/300",
+                },
+                {
+                  id: 3,
+                  title: "Hill Country Explorer",
+                  location: "Kandy, Nuwara Eliya, Ella",
+                  duration: "5 days",
+                  price: "Rs 55,000",
+                  image: "https://picsum.photos/id/110/400/300",
+                },
+              ]
+                .filter((item) => item.id !== tour.id)
+                .map((relatedTour) => (
+                  <div key={relatedTour.id} className="group">
+                    <Link to={`/tour/${relatedTour.id}`} className="block">
+                      <div className="bg-card rounded-lg overflow-hidden shadow-card card-hover cursor-pointer">
+                        <div className="relative">
+                          <img
+                            src={relatedTour.image}
+                            alt={relatedTour.title}
+                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute top-3 left-3">
+                            <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium">
+                              {relatedTour.duration}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="p-6">
+                          <h3 className="text-xl font-semibold mb-2">
+                            {relatedTour.title}
+                          </h3>
+                          <div className="flex items-center gap-2 text-muted-foreground mb-4">
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-sm">
+                              {relatedTour.location}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="text-2xl font-bold text-primary">
+                              {relatedTour.price}
+                            </div>
+                            <div className="flex items-center gap-2 text-muted-foreground">
+                              <Clock className="w-4 h-4" />
+                              <span className="text-sm">
+                                {relatedTour.duration}
+                              </span>
+                            </div>
+                          </div>
+
+                          <Link to="/contact">
+                            <Button variant="pill" className="w-full">
+                              Learn More
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+            </div>
+          </div>
+
           {/* Lightbox */}
           <Lightbox
             open={lightboxOpen}
@@ -558,6 +646,9 @@ const TourDetails = () => {
       </div>
 
       <Footer />
+
+      {/* Mobile Back Button */}
+      <BackButton to="/#tours" text="Back to Tours" />
     </div>
   );
 };

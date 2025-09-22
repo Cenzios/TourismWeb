@@ -9,11 +9,11 @@ const HeroSection = () => {
 
   // Array of background images
   const backgroundImages = [
-    "https://cdn.shopify.com/s/files/1/0026/2894/3925/t/20/assets/pf-96a910ba--surfingsrilanka1.jpg?v=1622922626", 
+    "https://cdn.shopify.com/s/files/1/0026/2894/3925/t/20/assets/pf-96a910ba--surfingsrilanka1.jpg?v=1622922626",
     "https://www.shenaliwaduge.com/wp-content/uploads/2021/11/tiger-srilanka-holidays-tours-2.jpg",
     "https://live.staticflickr.com/2185/32749733106_b1d9c24d3f_b.jpg",
     "https://wallpaperaccess.com/full/3558943.jpg",
-    "https://www.lovidhu.com/uploads/posts-seo/2021/02/ambuluwawa-tower-gampola-kandy-sri-lanka.jpg"
+    "https://www.lovidhu.com/uploads/posts-seo/2021/02/ambuluwawa-tower-gampola-kandy-sri-lanka.jpg",
   ];
 
   // Auto-cycle through images
@@ -72,9 +72,7 @@ const HeroSection = () => {
           }}
           className="text-5xl md:text-7xl font-bold max-md:mt-16 mb-8 drop-shadow-lg"
         >
-          Travel memories
-          <br />
-          you'll never forget
+          The next travel is your best travel.
         </motion.h1>
 
         {/* Primary CTA */}

@@ -161,17 +161,12 @@ const GallerySection = () => {
                 className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               />
 
-              {/* Location Label (only for first image) */}
+              {/* Location Label */}
               {image.location && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileHover={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute bottom-4 left-4 flex items-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                >
+                <div className="absolute bottom-4 left-4 flex items-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                   <MapPin size={16} className="mr-2" />
                   <span className="text-sm font-medium">{image.location}</span>
-                </motion.div>
+                </div>
               )}
             </motion.div>
           ))}
@@ -192,6 +187,31 @@ const GallerySection = () => {
           render={{
             buttonPrev: () => null,
             buttonNext: () => null,
+            slide: ({ slide, rect }) => {
+              const currentImage = galleryImages[lightboxIndex];
+              return (
+                <div className="relative w-full h-full">
+                  <img
+                    src={slide.src}
+                    alt={slide.alt}
+                    style={{
+                      width: rect.width,
+                      height: rect.height,
+                      objectFit: "contain",
+                    }}
+                  />
+                  {/* Location in bottom right corner */}
+                  {currentImage?.location && (
+                    <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm text-white px-3 py-2 rounded-lg flex items-center gap-2">
+                      <MapPin size={16} />
+                      <span className="text-sm font-medium">
+                        {currentImage.location}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            },
           }}
         />
       </div>

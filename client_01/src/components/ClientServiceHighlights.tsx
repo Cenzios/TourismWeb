@@ -42,7 +42,7 @@ const ClientServiceHighlights = () => {
   }, [galleryImages.length]);
 
   return (
-    <section className="py-12 md:py-20 relative overflow-hidden bg-gradient-to-br from-coral-orange/90 via-coral-orange to-coral-orange/90">
+    <section className="py-12 md:py-20 relative overflow-hidden bg-primary/10">
       <div className="container mx-auto max-w-7xl px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Content - Award/Achievement Section */}
@@ -51,22 +51,22 @@ const ClientServiceHighlights = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-white"
+            className=""
           >
             {/* Award Badge */}
             <motion.div
-              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6"
+              className="inline-flex items-center gap-3 bg-slate-100 backdrop-blur-sm border border-slate-200 rounded-full px-4 py-2 mb-6"
               whileHover={{ scale: 1.05 }}
             >
               <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
                 <Trophy size={16} className="text-slate-900" />
               </div>
-              <span className="text-white font-semibold text-sm">2025</span>
+              <span className="font-semibold text-sm text-slate-700">2025</span>
             </motion.div>
 
             {/* Main Heading */}
             <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight"
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight text-slate-900"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -74,7 +74,7 @@ const ClientServiceHighlights = () => {
             >
               Travellers'
               <br />
-              <span className="text-yellow-400">Choice</span>
+              <span className="text-yellow-500">Choice</span>
               <br />
               Best Client Support
               <br />
@@ -83,7 +83,7 @@ const ClientServiceHighlights = () => {
 
             {/* Description */}
             <motion.p
-              className="text-lg md:text-xl text-white/80 mb-6 md:mb-8 leading-relaxed"
+              className="text-lg md:text-xl text-slate-600 mb-6 md:mb-8 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -103,7 +103,7 @@ const ClientServiceHighlights = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="bg-white text-slate-900 hover:bg-white/90 font-semibold px-8 py-3 text-lg rounded-full"
+                className="bg-slate-900 text-white hover:bg-slate-800 font-semibold px-8 py-3 text-lg rounded-full"
               >
                 See Our Clients
               </Button>
@@ -128,7 +128,7 @@ const ClientServiceHighlights = () => {
               />
 
               {/* Image Overlay for better text contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
 
               {/* Image Info Overlay */}
               <div className="absolute bottom-4 left-4 text-white">
@@ -165,7 +165,7 @@ const ClientServiceHighlights = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg"
+              className="absolute top-4 right-4 bg-white backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-slate-200"
             >
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-1">
@@ -173,7 +173,7 @@ const ClientServiceHighlights = () => {
                     <Star
                       key={i}
                       size={16}
-                      className="text-yellow-400 fill-current"
+                      className="text-yellow-500 fill-current"
                     />
                   ))}
                 </div>

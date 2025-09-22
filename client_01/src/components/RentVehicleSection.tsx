@@ -166,7 +166,7 @@ const RentVehicleSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-white ms-[8%] rounded-s-2xl py-8 md:py-12 ps-8 md:ps-12 shadow-lg"
+          className="bg-white ms-[5%] rounded-s-2xl py-8 md:py-12 ps-8 md:ps-12 shadow-lg"
         >
           {/* Header Section */}
           <div className="text-center mb-12 me-[14%]">
@@ -177,7 +177,7 @@ const RentVehicleSection = () => {
               transition={{ duration: 0.5 }}
               className="text-coral-orange text-sm font-semibold uppercase tracking-wide mb-3"
             >
-              TRANSPORTATION
+              drive by yourself
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: -20 }}

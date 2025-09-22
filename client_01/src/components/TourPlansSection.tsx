@@ -139,7 +139,7 @@ const TourPlansSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-white me-[8%] rounded-e-2xl py-8 md:py-12 pe-8 md:pe-12 ps-2 md:ps-4 shadow-lg"
+          className="bg-white me-[5%] rounded-e-2xl py-8 md:py-12 pe-8 md:pe-12 ps-2 md:ps-4 shadow-lg"
         >
           {/* Header Section */}
           <div className="text-center mb-12 ms-[14%]">
@@ -150,7 +150,7 @@ const TourPlansSection = () => {
               transition={{ duration: 0.5 }}
               className="text-coral-orange text-sm font-semibold uppercase tracking-wide mb-3"
             >
-              TRAVEL PLANS
+              Tailor-Made Tours
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: -20 }}
