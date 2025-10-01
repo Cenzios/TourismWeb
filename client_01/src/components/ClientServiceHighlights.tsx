@@ -161,26 +161,42 @@ const ClientServiceHighlights = () => {
 
             {/* Floating Stats Badge */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: -10, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="absolute top-4 right-4 bg-white backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-slate-200"
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="absolute top-4 right-4 bg-gradient-to-r from-yellow-100 via-white to-yellow-50 
+             rounded-3xl p-5 shadow-lg border border-yellow-200 hover:shadow-xl transition-all duration-300"
             >
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-1">
+              <div className="flex flex-col items-center text-center">
+                {/* Stars Row */}
+                <div className="flex gap-2 mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      size={16}
-                      className="text-yellow-500 fill-current"
+                      size={20}
+                      className="text-yellow-500 fill-yellow-400 drop-shadow-sm"
                     />
                   ))}
                 </div>
-                <div className="text-right">
-                  <div className="text-xl font-bold text-slate-900">4.9</div>
-                  <div className="text-xs text-slate-600">50k+ reviews</div>
+
+                {/* Rating Value */}
+                <div className="text-3xl font-extrabold text-slate-900 mb-1">
+                  4.9
                 </div>
+
+                {/* Reviews */}
+                <div className="text-sm font-medium text-slate-600">
+                  50k+ Reviews
+                </div>
+
+                {/* Badge */}
+                {/* <div
+                  className="mt-2 inline-block px-3 py-1 text-xs font-semibold 
+                    bg-yellow-400 text-white rounded-full shadow-sm"
+                >
+                  ⭐ Top Rated
+                </div> */}
               </div>
             </motion.div>
           </motion.div>
