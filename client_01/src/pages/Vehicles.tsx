@@ -321,10 +321,7 @@ const Vehicles = () => {
                   </div>
 
                   <div className="p-3 md:p-6 flex flex-col h-[calc(100%-8rem)] md:h-[calc(100%-12rem)]">
-                    <h3
-                      className="text-lg md:text-2xl font-bold mb-1 md:mb-2 text-left line-clamp-1"
-                      style={{ fontFamily: "Britannica, sans-serif" }}
-                    >
+                    <h3 className="text-lg md:text-2xl font-bold mb-1 md:mb-2 text-left line-clamp-1">
                       {vehicle.model}
                     </h3>
 
