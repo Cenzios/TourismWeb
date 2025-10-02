@@ -243,7 +243,7 @@ const AttractionsSection = () => {
                       </motion.h3>
 
                       {/* View Button */}
-                      <div className="flex justify-end mt-auto">
+                      <div className="hidden sm:flex justify-end mt-auto">
                         <Button className="rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-0.5">
                           View
                         </Button>
