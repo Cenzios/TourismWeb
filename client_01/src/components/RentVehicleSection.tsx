@@ -237,7 +237,7 @@ const RentVehicleSection = () => {
                           </motion.div>
                         </div>
                         {/* Type Badge */}
-                        <div className="absolute top-3 right-3">
+                        <div className="hidden sm:block absolute top-3 right-3">
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -298,7 +298,7 @@ const RentVehicleSection = () => {
                             /{vehicle.priceUnit}
                           </span>
                         </div>
-                        <Button className="rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-0.5">
+                        <Button className="hidden sm:block rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-0.5">
                           View
                         </Button>
                       </div>
