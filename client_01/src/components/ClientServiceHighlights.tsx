@@ -9,7 +9,7 @@ const ClientServiceHighlights = () => {
   // Image array for auto-switching gallery
   const galleryImages = [
     {
-      src: "https://happygringo.com/wp-content/uploads/2020/02/bn-happy-clients-slider.jpg",
+      src: "https://media.easy-peasy.ai/27feb2bb-aeb4-4a83-9fb6-8f3f2a15885e/df807a3b-c26f-4e57-bad3-b4192c3d1b8c.png",
       alt: "Parasailing over tropical waters with city skyline",
       location: "Tropical Adventure",
     },
