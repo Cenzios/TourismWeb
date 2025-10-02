@@ -70,7 +70,7 @@ const HeroSection = () => {
             type: "spring",
             stiffness: 50,
           }}
-          className="text-5xl md:text-7xl font-bold max-md:mt-16 mb-8 drop-shadow-lg"
+          className="text-5xl text-white md:text-7xl font-bold max-md:mt-16 mb-8 drop-shadow-lg"
         >
           The next travel is your best travel.
         </motion.h1>
