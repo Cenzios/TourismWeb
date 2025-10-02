@@ -178,7 +178,7 @@ const TourPlansSection = () => {
                 <motion.div
                   key={plan.id}
                   variants={itemVariants}
-                  className="flex-none w-40 sm:w-48 md:w-56 snap-start"
+                  className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 snap-start"
                   whileHover={{ y: -3 }}
                 >
                   <Link to={`/tour/${plan.id}`} className="block group">
