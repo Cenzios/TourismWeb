@@ -158,18 +158,18 @@ const RentVehicleSection = () => {
   };
 
   return (
-    <section id="vehicles" className="py-4 bg-gray-50">
-      <div className="">
+    <section id="vehicles" className="py-4 px-8 bg-gray-50">
+      <div className="max-w-8xl mx-auto px-4">
         {/* White Card Container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-white ms-[5%] rounded-s-2xl py-8 md:py-12 ps-8 md:ps-12 shadow-lg"
+          className="bg-white rounded-2xl py-8 md:py-12 px-8 md:px-12 shadow-lg"
         >
           {/* Header Section */}
-          <div className="text-center mb-12 me-[14%]">
+          <div className="text-center mb-12">
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               whileInView={{ opacity: 1, y: 0 }}
