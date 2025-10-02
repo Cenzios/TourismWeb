@@ -319,7 +319,7 @@ const Attractions = () => {
                         <h2 className="text-lg md:text-xl font-bold text-gray-900 line-clamp-1">
                           {attraction.title}
                         </h2>
-                        <div className="flex items-center bg-yellow-100 text-gray-900 px-2 py-0.5 rounded-full text-xs font-semibold">
+                        <div className="flex items-center bg-blue-100 text-gray-900 px-2 py-0.5 rounded-full text-xs font-semibold">
                           <Star
                             className="text-yellow-400 mr-1"
                             size={14}
