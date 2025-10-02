@@ -131,18 +131,18 @@ const TourPlansSection = () => {
   };
 
   return (
-    <section id="tours" className="py-4 bg-gray-50">
-      <div className="">
+    <section id="tours" className="py-4 px-8 bg-gray-50">
+      <div className="max-w-8xl mx-auto px-4">
         {/* White Card Container */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-white me-[5%] rounded-e-2xl py-8 md:py-12 pe-8 md:pe-12 ps-2 md:ps-4 shadow-lg"
+          className="bg-white rounded-2xl py-8 md:py-12 px-8 md:px-12 shadow-lg"
         >
           {/* Header Section */}
-          <div className="text-center mb-12 ms-[14%]">
+          <div className="text-center mb-12">
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               whileInView={{ opacity: 1, y: 0 }}
