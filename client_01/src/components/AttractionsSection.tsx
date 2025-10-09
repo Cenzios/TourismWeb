@@ -95,31 +95,19 @@ const AttractionsSection = () => {
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: -400,
-        behavior: "smooth",
-      });
+      scrollContainerRef.current.scrollBy({ left: -400, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 400,
-        behavior: "smooth",
-      });
+      scrollContainerRef.current.scrollBy({ left: 400, behavior: "smooth" });
     }
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -127,16 +115,8 @@ const AttractionsSection = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-      },
+      transition: { type: "spring" as const, stiffness: 100 },
     },
-  };
-
-  const filterVariants = {
-    hover: { scale: 1.05 },
-    tap: { scale: 0.95 },
   };
 
   return (
@@ -145,15 +125,14 @@ const AttractionsSection = () => {
       className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-12 md:mb-16">
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-16">
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-3"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-2"
           >
             Must-See Attractions
           </motion.p>
@@ -162,31 +141,28 @@ const AttractionsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900"
-            style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif" }}
+            className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900"
           >
             Sri Lankan Destinations
           </motion.h2>
         </div>
 
-        {/* Cards Grid */}
+        {/* Desktop Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12"
+          className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8"
         >
           {attractions.slice(0, 6).map((attraction, index) => (
             <motion.div
               key={attraction.id}
               variants={itemVariants}
               whileHover={{ y: -8 }}
-              transition={{ duration: 0.3 }}
             >
               <Link to={`/attraction/${attraction.id}`} className="block group">
                 <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-                  {/* Image Container */}
                   <div className="relative overflow-hidden">
                     <motion.img
                       whileHover={{ scale: 1.1 }}
@@ -195,79 +171,34 @@ const AttractionsSection = () => {
                       alt={attraction.title}
                       className="w-full h-56 md:h-64 object-cover"
                     />
-                    {/* Rating Badge */}
-                    <div className="absolute top-4 right-4">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg"
-                      >
-                        <Star
-                          className="text-yellow-400"
-                          size={14}
-                          fill="currentColor"
-                          strokeWidth={0}
-                        />
-                        <span className="text-sm font-semibold text-gray-900">
-                          {attraction.rating}
-                        </span>
-                      </motion.div>
+                    <div className="absolute top-4 right-4 bg-white/95 px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+                      <Star
+                        className="text-yellow-400"
+                        size={14}
+                        fill="currentColor"
+                        strokeWidth={0}
+                      />
+                      <span className="text-sm font-semibold text-gray-900">
+                        {attraction.rating}
+                      </span>
                     </div>
                   </div>
-
-                  {/* Content */}
                   <div className="p-6">
-                    {/* Title */}
-                    <motion.h3
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: index * 0.1 + 0.3 }}
-                      className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-200"
-                      style={{
-                        fontFamily: "'Helvetica Neue', 'Arial', sans-serif",
-                      }}
-                    >
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                       {attraction.title}
-                    </motion.h3>
-
-                    {/* Category Label */}
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: index * 0.1 + 0.2 }}
-                      className="text-orange-500 text-xs font-semibold uppercase tracking-wider mb-3"
-                      style={{ fontFamily: "'Inter', sans-serif" }}
-                    >
+                    </h3>
+                    <p className="text-orange-500 text-xs font-semibold uppercase tracking-wider mb-3">
                       {attraction.categoryLabel}
-                    </motion.p>
-
-                    {/* Description */}
-                    <p
-                      className="text-gray-600 text-sm leading-relaxed mb-4"
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        lineHeight: "1.7",
-                      }}
-                    >
+                    </p>
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4">
                       {attraction.description}
                     </p>
-
-                    {/* Footer */}
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      {/* Location */}
                       <div className="flex items-center gap-2 text-gray-500">
-                        <MapPin size={16} className="flex-shrink-0" />
-                        <span
-                          className="text-sm"
-                          style={{ fontFamily: "'Inter', sans-serif" }}
-                        >
-                          {attraction.location}
-                        </span>
+                        <MapPin size={16} />
+                        <span className="text-sm">{attraction.location}</span>
                       </div>
-
-                      {/* View Button */}
-                      <Button className="px-6 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-600 hover:text-white transition-all duration-300">
+                      <Button className="px-6 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-600 hover:text-white">
                         View
                       </Button>
                     </div>
@@ -278,25 +209,105 @@ const AttractionsSection = () => {
           ))}
         </motion.div>
 
-        {/* Bottom Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="flex justify-center"
-        >
+        {/* Desktop See All Destinations Button */}
+        <div className="hidden lg:flex justify-center mb-12">
           <Link to="/attractions">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                variant="outline"
-                className="flex items-center gap-2 px-8 py-3 bg-white border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                <Navigation className="w-5 h-5" />
-                See All Destination
-              </Button>
-            </motion.div>
+            <Button className="flex items-center gap-2 px-6 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white shadow-md">
+              <Navigation className="w-5 h-5" />
+              See All Destinations
+            </Button>
           </Link>
+        </div>
+
+        {/* Mobile Horizontal Scroll */}
+        <div className="md:hidden mb-8">
+          <motion.div
+            ref={scrollContainerRef}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory px-1"
+            style={{ scrollSnapType: "x mandatory" }}
+          >
+            {attractions.map((attraction) => (
+              <motion.div
+                key={attraction.id}
+                variants={itemVariants}
+                className="flex-none w-full max-w-[90vw] snap-center"
+              >
+                <Link
+                  to={`/attraction/${attraction.id}`}
+                  className="block group"
+                >
+                  <div className="bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={attraction.image}
+                        alt={attraction.title}
+                        className="w-full h-52 object-cover"
+                      />
+                      <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+                        <Star
+                          className="text-yellow-400"
+                          size={14}
+                          fill="currentColor"
+                          strokeWidth={0}
+                        />
+                        <span className="text-sm font-bold text-gray-900">
+                          {attraction.rating}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <h3 className="text-xl font-bold text-gray-900 mb-1">
+                        {attraction.title}
+                      </h3>
+                      <p className="text-blue-600 text-xs font-semibold uppercase tracking-wider mb-3">
+                        {attraction.categoryLabel}
+                      </p>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                        {attraction.description}
+                      </p>
+                      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div className="flex items-center gap-2 text-gray-500">
+                          <MapPin size={16} />
+                          <span className="text-sm">{attraction.location}</span>
+                        </div>
+                        <Button className="px-6 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-600 hover:text-white">
+                          View
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Mobile Bottom Action */}
+        <motion.div className="flex items-center justify-between gap-4 mt-4 md:hidden">
+          <Link to="/attractions">
+            <Button className="flex items-center gap-2 px-6 py-2 bg-white border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white shadow-md">
+              <Navigation className="w-5 h-5" />
+              See All Destinations
+            </Button>
+          </Link>
+          <div className="flex items-center gap-3">
+            <motion.button
+              onClick={scrollLeft}
+              className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-blue-600 hover:bg-blue-600 hover:text-white group bg-white"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-600 group-hover:text-white" />
+            </motion.button>
+            <motion.button
+              onClick={scrollRight}
+              className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-blue-600 hover:bg-blue-600 hover:text-white group bg-white"
+            >
+              <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white" />
+            </motion.button>
+          </div>
         </motion.div>
       </div>
     </section>
