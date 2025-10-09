@@ -158,211 +158,147 @@ const RentVehicleSection = () => {
   };
 
   return (
-    <section id="vehicles" className="py-4 px-8 bg-gray-50">
-      <div className="max-w-8xl mx-auto px-4">
-        {/* White Card Container */}
+    <section id="vehicles" className="py-16 px-4 bg-white">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-blue-600 text-sm font-medium mb-2"
+          >
+            Drive By Yourself
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold text-gray-900"
+          >
+            Vehicle Rentals
+          </motion.h2>
+        </div>
+
+        {/* Grid Layout for Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+        >
+          {vehicles.map((vehicle, index) => (
+            <motion.div
+              key={vehicle.id}
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Link to={`/vehicle/${vehicle.id}`} className="block group">
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                  {/* Image */}
+                  <div className="relative">
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                      src={vehicle.image}
+                      alt={vehicle.model}
+                      className="w-full h-56 object-cover"
+                    />
+                    {/* Rating Badge */}
+                    <div className="absolute top-4 left-4">
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="bg-white px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1 shadow-md"
+                      >
+                        <Star
+                          className="text-yellow-400"
+                          size={14}
+                          fill="currentColor"
+                        />
+                        <span className="text-gray-900">{vehicle.rating}</span>
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    {/* Title */}
+                    <motion.h3
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.1 + 0.2 }}
+                      className="text-lg font-bold text-gray-900 mb-3"
+                    >
+                      {vehicle.model}
+                    </motion.h3>
+
+                    {/* Specs */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.1 + 0.3 }}
+                      className="flex items-center gap-4 text-sm text-gray-600 mb-4"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <Fuel size={16} className="text-gray-400" />
+                        <span>{vehicle.specs.fuel}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Users size={16} className="text-gray-400" />
+                        <span>{vehicle.specs.capacity}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Settings size={16} className="text-gray-400" />
+                        <span>{vehicle.specs.transmission}</span>
+                      </div>
+                    </motion.div>
+
+                    {/* Price + Button */}
+                    <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+                      <div>
+                        <span className="text-xl font-bold text-gray-900">
+                          RS. {vehicle.price}
+                        </span>
+                        <span className="text-sm text-gray-500">
+                          / {vehicle.priceUnit}
+                        </span>
+                      </div>
+                      <Button className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 font-medium">
+                        View
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* See All Button - Centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-white rounded-2xl py-8 md:py-12 px-8 md:px-12 shadow-lg"
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="flex justify-center"
         >
-          {/* Header Section */}
-          <div className="text-center mb-12">
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-coral-orange text-sm font-semibold uppercase tracking-wide mb-3"
-            >
-              drive by yourself
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl md:text-4xl font-bold text-gray-900 font-serif"
-            >
-              Vehicle Rentals
-            </motion.h2>
-          </div>
-
-          {/* Horizontal Scrollable Cards Container */}
-          <div className="relative">
-            <motion.div
-              ref={scrollContainerRef}
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="flex gap-4 pe-4 rounded-s-2xl md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
-              style={{ scrollSnapType: "x mandatory" }}
-            >
-              {vehicles.slice(0, 6).map((vehicle, index) => (
-                <motion.div
-                  key={vehicle.id}
-                  variants={itemVariants}
-                  // ✅ Show exactly 5 cards by using 1/5 width
-                  className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 snap-start"
-                  whileHover={{ y: -3 }}
-                >
-                  <Link to={`/vehicle/${vehicle.id}`} className="block group">
-                    <div>
-                      {/* Image */}
-                      <div className="relative mb-3">
-                        <motion.img
-                          whileHover={{ scale: 1.02 }}
-                          transition={{ duration: 0.3 }}
-                          src={vehicle.image}
-                          alt={vehicle.model}
-                          className="w-full h-32 sm:h-40 md:h-48 object-cover rounded-lg"
-                        />
-                        {/* Rating Badge */}
-                        <div className="absolute top-3 left-3">
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-gray-900 text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1"
-                          >
-                            <Star
-                              className="text-yellow-400"
-                              size={12}
-                              fill="currentColor"
-                            />
-                            {vehicle.rating}
-                          </motion.div>
-                        </div>
-                        {/* Type Badge */}
-                        <div className="hidden sm:block absolute top-3 right-3">
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: index * 0.1 + 0.1 }}
-                            className="bg-coral-orange text-white px-2 py-1 rounded-lg text-xs font-medium"
-                          >
-                            {vehicle.type}
-                          </motion.div>
-                        </div>
-                      </div>
-
-                      {/* Category Label */}
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.1 + 0.2 }}
-                        className="text-coral-orange text-[10px] font-semibold uppercase tracking-wider mb-1"
-                      >
-                        {vehicle.categoryLabel}
-                      </motion.p>
-
-                      {/* Title */}
-                      <motion.h3
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.1 + 0.3 }}
-                        className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-coral-orange transition-colors duration-200 line-clamp-2 mb-2"
-                      >
-                        {vehicle.model}
-                      </motion.h3>
-
-                      {/* Specs */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.1 + 0.4 }}
-                        className="text-[11px] text-gray-500 mb-3"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-1">
-                            <Users size={11} />
-                            <span>{vehicle.specs.capacity}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Settings size={11} />
-                            <span>{vehicle.specs.transmission}</span>
-                          </div>
-                        </div>
-                      </motion.div>
-
-                      {/* Price + Button */}
-                      <div className="flex justify-between items-center mt-auto">
-                        <div>
-                          <span className="text-base font-bold text-slate-900">
-                            Rs. {vehicle.price}
-                          </span>
-                          <span className="text-xs text-slate-500">
-                            /{vehicle.priceUnit}
-                          </span>
-                        </div>
-                        <Button className="hidden sm:block rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-0.5">
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+          <Link to="/vehicles">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="outline"
+                className="rounded-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors duration-200 px-8 py-3 font-medium text-base flex items-center gap-2"
+              >
+                <Navigation className="w-5 h-5" />
+                See All Vehicles
+              </Button>
             </motion.div>
-
-            {/* Navigation Controls */}
-            <div className="flex flex-col me-[14%] sm:flex-row justify-between items-center mt-8 gap-4 sm:gap-0">
-              {/* See All Button */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-              >
-                <Link to="/vehicles">
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-coral-orange text-coral-orange hover:bg-coral-orange hover:text-coral-orange-foreground transition-colors duration-200 px-6 py-2"
-                    >
-                      <Navigation className="w-4 h-4 mr-2" />
-                      See all vehicles
-                    </Button>
-                  </motion.div>
-                </Link>
-              </motion.div>
-
-              {/* Arrow Navigation */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="flex items-center gap-3"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={scrollLeft}
-                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600 group-hover:text-white" />
-                </motion.button>
-
-                <div className="w-8 h-px bg-gray-300"></div>
-
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={scrollRight}
-                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
-                >
-                  <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white" />
-                </motion.button>
-              </motion.div>
-            </div>
-          </div>
+          </Link>
         </motion.div>
       </div>
     </section>
