@@ -1,13 +1,6 @@
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Clock,
-  MapPin,
-  Star,
-  ArrowLeft,
-  ArrowRight,
-  Navigation,
-} from "lucide-react";
+import { Clock, Star, Navigation } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -88,25 +81,6 @@ const TourPlansSection = () => {
       categoryLabel: "COASTAL TOURS",
     },
   ];
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: -400,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({
-        left: 400,
-        behavior: "smooth",
-      });
-    }
-  };
-
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -131,192 +105,172 @@ const TourPlansSection = () => {
   };
 
   return (
-    <section id="tours" className="py-4 px-8 bg-gray-50">
-      <div className="max-w-8xl mx-auto px-4">
-        {/* White Card Container */}
+    <section
+      id="tours"
+      className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white"
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-12 md:mb-16">
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-blue-600 text-sm font-semibold uppercase tracking-wide mb-3"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            Tailor-Made Tours
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900"
+            style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif" }}
+          >
+            Tour Packages
+          </motion.h2>
+        </div>
+
+        {/* Cards Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-white rounded-2xl py-8 md:py-12 px-8 md:px-12 shadow-lg"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12"
         >
-          {/* Header Section */}
-          <div className="text-center mb-12">
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-coral-orange text-sm font-semibold uppercase tracking-wide mb-3"
-            >
-              Tailor-Made Tours
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl md:text-4xl font-bold text-gray-900 font-serif"
-            >
-              Tour Packages
-            </motion.h2>
-          </div>
-
-          {/* Horizontal Scrollable Cards Container */}
-          <div className="relative">
+          {tourPlans.slice(0, 6).map((plan, index) => (
             <motion.div
-              ref={scrollContainerRef}
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="flex gap-4 pe-4 rounded-s-2xl md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory"
-              style={{ scrollSnapType: "x mandatory" }}
+              key={plan.id}
+              variants={itemVariants}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.3 }}
             >
-              {tourPlans.slice(0, 6).map((plan, index) => (
-                <motion.div
-                  key={plan.id}
-                  variants={itemVariants}
-                  className="flex-none w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 snap-start"
-                  whileHover={{ y: -3 }}
-                >
-                  <Link to={`/tour/${plan.id}`} className="block group">
-                    <div className="">
-                      {/* Image */}
-                      <div className="relative mb-3">
-                        <motion.img
-                          whileHover={{ scale: 1.02 }}
-                          transition={{ duration: 0.3 }}
-                          src={plan.image}
-                          alt={plan.title}
-                          className="w-full h-32 sm:h-40 md:h-48 object-cover rounded-lg"
-                        />
-                        {/* Rating Badge */}
-                        <div className="absolute top-3 left-3">
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-gray-900 text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1"
-                          >
-                            <Star
-                              className="text-yellow-400"
-                              size={12}
-                              fill="currentColor"
-                            />
-                            {plan.rating}
-                          </motion.div>
-                        </div>
-                        {/* Duration Badge */}
-                        <div className="hidden sm:block absolute top-3 right-3">
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: index * 0.1 + 0.1 }}
-                            className="bg-coral-orange text-white px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1"
-                          >
-                            <Clock size={14} />
-                            {plan.duration}
-                          </motion.div>
-                        </div>
-                      </div>
-
-                      {/* Category Label */}
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: index * 0.1 + 0.2 }}
-                        className="text-coral-orange text-[10px] font-semibold uppercase tracking-wider mb-1"
+              <Link to={`/tour/${plan.id}`} className="block group">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+                  {/* Image Container */}
+                  <div className="relative overflow-hidden">
+                    <motion.img
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.4 }}
+                      src={plan.image}
+                      alt={plan.title}
+                      className="w-full h-56 md:h-64 object-cover"
+                    />
+                    {/* Duration Badge - Top Right */}
+                    <div className="absolute top-4 right-4">
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg"
                       >
-                        {plan.categoryLabel}
-                      </motion.p>
+                        <Clock size={14} className="text-gray-700" />
+                        <span className="text-sm font-semibold text-gray-900">
+                          {plan.duration}
+                        </span>
+                      </motion.div>
+                    </div>
+                  </div>
 
-                      {/* Title */}
+                  {/* Content */}
+                  <div className="p-6">
+                    {/* Title + Rating in one row */}
+                    <div className="flex items-center justify-between mb-2">
                       <motion.h3
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: index * 0.1 + 0.3 }}
-                        className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-coral-orange transition-colors duration-200 line-clamp-2 mb-2"
+                        className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200"
+                        style={{
+                          fontFamily: "'Helvetica Neue', 'Arial', sans-serif",
+                        }}
                       >
                         {plan.title}
                       </motion.h3>
 
-                      {/* Price + Button */}
-                      <div className="flex justify-between items-center mt-auto">
-                        <div>
-                          <span className="text-base font-bold text-slate-900">
-                            {plan.price}
-                          </span>
-                          <span className="text-xs text-slate-500">
-                            /{plan.priceUnit}
-                          </span>
-                        </div>
-                        <Button className="hidden sm:block rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-0.5">
-                          View
-                        </Button>
+                      {/* Rating - moved here */}
+                      <div className="flex items-center gap-1.5">
+                        <Star
+                          className="text-yellow-400"
+                          size={16}
+                          fill="currentColor"
+                          strokeWidth={0}
+                        />
+                        <span
+                          className="text-sm font-semibold text-gray-900"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {plan.rating}
+                        </span>
                       </div>
                     </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
 
-            {/* Navigation Controls */}
-            <div className="flex flex-col me-[14%] sm:flex-row justify-between items-center mt-8 gap-4 sm:gap-0">
-              {/* See All Button */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-              >
-                <Link to="/tours">
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-coral-orange text-coral-orange hover:bg-coral-orange hover:text-coral-orange-foreground transition-colors duration-200 px-6 py-2"
+                    {/* Category Label */}
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.1 + 0.2 }}
+                      className="text-orange-500 text-xs font-semibold uppercase tracking-wider mb-4"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
                     >
-                      <Navigation className="w-4 h-4 mr-2" />
-                      See all tours
-                    </Button>
-                  </motion.div>
-                </Link>
-              </motion.div>
+                      {plan.categoryLabel}
+                    </motion.p>
 
-              {/* Arrow Navigation */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="flex items-center gap-3"
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      {/* Price */}
+                      <div className="flex flex-col">
+                        <span
+                          className="text-xl font-bold text-gray-900"
+                          style={{
+                            fontFamily: "'Helvetica Neue', 'Arial', sans-serif",
+                          }}
+                        >
+                          {plan.price}
+                        </span>
+                        <span
+                          className="text-sm text-gray-500"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          per person
+                        </span>
+                      </div>
+
+                      {/* Book Now Button */}
+                      <Button className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-semibold text-sm hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">
+                        Book Now
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Bottom Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="flex justify-center"
+        >
+          <Link to="/tours">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 px-8 py-3 bg-white border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={scrollLeft}
-                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600 group-hover:text-white" />
-                </motion.button>
-
-                <div className="w-8 h-px bg-gray-300"></div>
-
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={scrollRight}
-                  className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-coral-orange hover:bg-coral-orange hover:text-white transition-all duration-200 group"
-                >
-                  <ArrowRight className="w-5 h-5 text-gray-600 group-hover:text-white" />
-                </motion.button>
-              </motion.div>
-            </div>
-          </div>
+                <Navigation className="w-5 h-5" />
+                See All Tours
+              </Button>
+            </motion.div>
+          </Link>
         </motion.div>
       </div>
     </section>
