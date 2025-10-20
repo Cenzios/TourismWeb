@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Array of background images
   const backgroundImages = [
     "https://images.pexels.com/photos/1998436/pexels-photo-1998436.jpeg",
     "https://images.pexels.com/photos/320003/pexels-photo-320003.jpeg",
@@ -16,19 +12,44 @@ const HeroSection = () => {
     "https://images.pexels.com/photos/30379319/pexels-photo-30379319.jpeg",
   ];
 
-  // Auto-cycle through images
+  const travelQuotes = [
+    "“Travel is the only thing you buy that makes you richer.”",
+    "“Jobs fill your pockets, but adventures fill your soul.”",
+    "“Take only memories, leave only footprints.”",
+    "“To travel is to live.”",
+    "“Adventure awaits — let’s explore together.”",
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex(
         (prevIndex) => (prevIndex + 1) % backgroundImages.length
       );
-    }, 4000); // Change image every 4 seconds
-
+    }, 5000);
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
+  const features = [
+    {
+      image: "/checkList.png",
+      text: "Discover expertly crafted tour packages for every traveller, from cultural and wildlife adventures to romantic getaways, offering personalized itineraries and unforgettable Sri Lankan experiences.",
+    },
+    {
+      image: "/vacation.png",
+      text: "Discover Sri Lanka’s stunning temples, beaches, tea plantations, and UNESCO sites with expert guides who reveal the island’s hidden gems and rich heritage.",
+    },
+    {
+      image: "/airplane.png",
+      text: "Enjoy seamless airport transfers in Sri Lanka with meet-and-greet service, comfortable vehicles, and professional drivers for a stress-free journey.",
+    },
+    {
+      image: "/fleet.png",
+      text: "Choose from our modern fleet of luxury sedans, SUVs, vans, and 4WDs. All with professional drivers, full insurance, and 24/7 support for safe, comfortable travel across Sri Lanka.",
+    },
+  ];
+
   return (
-    <section className="relative h-[60vh] md:h-hero flex items-center justify-center overflow-hidden">
+    <section className="relative h-[100vh] flex flex-col justify-between overflow-hidden text-white">
       {/* Background Image Switcher */}
       <div className="absolute inset-0">
         {backgroundImages.map((image, index) => (
@@ -36,64 +57,60 @@ const HeroSection = () => {
             key={index}
             className="absolute inset-0"
             initial={{ opacity: 0 }}
-            animate={{
-              opacity: index === currentImageIndex ? 1 : 0,
-            }}
+            animate={{ opacity: index === currentImageIndex ? 1 : 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
-            <img
-              src={image}
-              alt={`Hero background ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
+            <img src={image} alt="" className="w-full h-full object-cover" />
           </motion.div>
         ))}
       </div>
 
       {/* Overlay */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="absolute inset-0 hero-overlay"
-      />
+      <div className="absolute inset-0 bg-black/40" />
 
-      {/* Content */}
-      <div className="relative z-10 text-center text-background px-4 max-w-4xl mx-auto">
-        {/* Main Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-            type: "spring",
-            stiffness: 50,
-          }}
-          className="text-5xl text-white md:text-7xl font-bold max-md:mt-16 mb-8 drop-shadow-lg"
-        >
-          The next travel is your best travel.
-        </motion.h1>
+      {/* Header Section (responsive alignment) */}
+      <div className="relative z-10 flex flex-col justify-center h-full w-full px-4 sm:px-8 md:px-12 lg:px-24">
+        <div className="max-w-7xl mx-auto w-full text-center md:text-left">
+          <h1 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-tight mb-4 md:mb-6 text-white drop-shadow-lg">
+            The Next Is Your Best Travel
+          </h1>
 
-        {/* Primary CTA */}
-        {/* <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.8,
-            type: "spring",
-          }}
-          className="mb-12"
-        >
-          <Link to="/contact">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="hero" size="lg" className="text-lg">
-                <Phone size={20} /> Call Us Now
-              </Button>
+          <motion.p
+            key={`quote-${currentImageIndex}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-[14px] sm:text-[16px] md:text-[18px] italic text-gray-200"
+          >
+            {travelQuotes[currentImageIndex]}
+          </motion.p>
+        </div>
+      </div>
+
+      {/* Feature Boxes */}
+      <div className="relative z-10 w-full flex justify-center mb-6 sm:mb-10 px-3 sm:px-6 md:px-8 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-7xl w-full">
+          {features.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.2, duration: 0.6 }}
+              className="backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl p-4 sm:p-5 text-center shadow-xl hover:bg-white/25 transition-all duration-300"
+            >
+              <div className="flex flex-col items-center text-white">
+                <img
+                  src={item.image}
+                  alt="feature icon"
+                  className="w-10 h-10 sm:w-12 sm:h-12 mb-3 object-contain filter invert brightness-0 contrast-100"
+                />
+                <p className="text-[12px] sm:text-[13px] md:text-[14px] leading-relaxed">
+                  {item.text}
+                </p>
+              </div>
             </motion.div>
-          </Link>
-        </motion.div> */}
+          ))}
+        </div>
       </div>
     </section>
   );
