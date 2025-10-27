@@ -337,7 +337,7 @@ const Attractions = () => {
                       </div>
 
                       {/* Description */}
-                      <p className="text-gray-600 leading-relaxed mb-3 text-sm md:text-base">
+                      <p className="text-gray-500 text-sm font-medium leading-relaxed mb-3  md:text-base">
                         {attraction.description}
                       </p>
 

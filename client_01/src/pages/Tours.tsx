@@ -211,7 +211,7 @@ const Tours = () => {
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-500 text-sm mb-3 line-clamp-2 hidden md:block">
+                    <p className="text-gray-500 text-sm font-medium mb-3 line-clamp-2 hidden md:block">
                       {tour.description}
                     </p>
 

@@ -360,7 +360,7 @@ const VehicleDetails = () => {
                       {vehicle.licensePlate}
                     </span>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
+                  <p className="text-gray-500 text-sm font-medium leading-relaxed mb-4">
                     {vehicle.description}
                   </p>
                   <p className="text-sm text-muted-foreground">
