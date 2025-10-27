@@ -177,7 +177,7 @@ const ServiceHighlights = () => {
             </motion.h2>
 
             <motion.div
-              className="relative max-w-lg"
+              className="relative max-w-lg "
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -199,7 +199,7 @@ const ServiceHighlights = () => {
                     }}
                     transition={{ duration: 0.5 }}
                   >
-                    <h4 className="font-semibold text-gray-900 text-xl mb-2">
+                    <h4 className="font-semibold text-gray-900 text-xl mb-2 mt-4">
                       {service.title}
                     </h4>
                     <p className="text-gray-600 text-base leading-relaxed">
