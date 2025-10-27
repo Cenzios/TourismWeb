@@ -190,7 +190,7 @@ const AttractionsSection = () => {
                     <p className="text-orange-500 text-xs font-semibold uppercase tracking-wider mb-3">
                       {attraction.categoryLabel}
                     </p>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    <p className="text-gray-600 text-[14px] leading-relaxed mb-4 font-normal">
                       {attraction.description}
                     </p>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
