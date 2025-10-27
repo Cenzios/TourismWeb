@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +12,7 @@ const Navigation = () => {
   const navItems = [
     { label: "ATTRACTIONS", href: "/attractions" },
     { label: "TOUR PLANS", href: "/tours" },
-    { label: "GALLERY", href: "/gallery" },
+    { label: "GALLERY", href: "/#gallery", isHash: true },
     { label: "CONTACT US", href: "/contact" },
   ];
 
@@ -56,15 +58,26 @@ const Navigation = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-10">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                className="text-sm font-semibold text-white hover:text-gray-200 transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.isHash ? (
+                <HashLink
+                  smooth
+                  key={item.label}
+                  to={item.href}
+                  className="text-sm font-semibold text-white hover:text-gray-200 transition-colors"
+                >
+                  {item.label}
+                </HashLink>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="text-sm font-semibold text-white hover:text-gray-200 transition-colors"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
 
           {/* Book Now Button */}
