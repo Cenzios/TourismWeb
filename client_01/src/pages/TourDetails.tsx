@@ -307,20 +307,27 @@ const TourDetails = () => {
         <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Back Button */}
           <Link
-            to="/#tours"
+            to="/"
             className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Tours
+            Back to Home
           </Link>
 
           {/* Header Section */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-            <h1 className="text-4xl font-bold mb-4 md:mb-0">{tour.title}</h1>
-            <div className="flex items-center text-muted-foreground">
-              <MapPin className="w-5 h-5 mr-2" />
-              <span className="font-medium">{tour.location}</span>
+            <div>
+              <h1 className="text-4xl font-bold mb-2">{tour.title}</h1>
+              <div className="flex items-center text-muted-foreground">
+                <MapPin className="w-5 h-5 mr-2" />
+                <span className="font-medium">{tour.location}</span>
+              </div>
             </div>
+            <Link to="/contact" className="mt-4 md:mt-0">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full">
+                Contact Us
+              </Button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -648,7 +655,7 @@ const TourDetails = () => {
       <Footer />
 
       {/* Mobile Back Button */}
-      <BackButton to="/#tours" text="Back to Tours" />
+      <BackButton to="/" text="Back to Home" />
     </div>
   );
 };
