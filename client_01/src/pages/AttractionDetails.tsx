@@ -315,7 +315,7 @@ const AttractionDetails = () => {
       <Navigation />
 
       <motion.div
-        className="pt-nav"
+        className="pt-24"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -325,10 +325,10 @@ const AttractionDetails = () => {
           <motion.div variants={itemVariants}>
             <Link
               to="/#attractions"
-              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+              className="inline-flex items-center text-muted-foreground hover:text-coral-orange mb-8 transition-colors font-medium"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Attractions
+              Back to Home
             </Link>
           </motion.div>
 
@@ -586,7 +586,6 @@ const AttractionDetails = () => {
               variants={itemVariants}
             >
               <h2 className="text-3xl font-bold">More Attractions</h2>
-            
             </motion.div>
 
             <motion.div

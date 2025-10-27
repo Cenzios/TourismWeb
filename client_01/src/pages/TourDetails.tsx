@@ -303,12 +303,12 @@ const TourDetails = () => {
     <div className="min-h-screen">
       <Navigation />
 
-      <div className="pt-nav">
+      <div className="pt-24">
         <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Back Button */}
           <Link
             to="/"
-            className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            className="inline-flex items-center text-muted-foreground hover:text-coral-orange mb-8 transition-colors font-medium"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home

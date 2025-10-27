@@ -256,7 +256,7 @@ const VehicleDetails = () => {
       <Navigation />
 
       <motion.div
-        className="pt-nav"
+        className="pt-24"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -266,10 +266,10 @@ const VehicleDetails = () => {
           <motion.div variants={itemVariants}>
             <Link
               to="/#vehicles"
-              className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
+              className="inline-flex items-center text-muted-foreground hover:text-coral-orange mb-8 transition-colors font-medium"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Vehicles
+              Back to Home
             </Link>
           </motion.div>
 

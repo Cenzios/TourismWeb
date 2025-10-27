@@ -230,7 +230,7 @@ const Attractions = () => {
     <div className="min-h-screen">
       <Navigation />
 
-      <div className="pt-nav bg-gray-50 min-h-screen">
+      <div className="pt-nav bg-gray-50 min-h-screen pt-24">
         <div className="container mx-auto max-w-7xl px-4 py-8">
           {/* Header */}
           <motion.div
