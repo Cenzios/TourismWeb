@@ -7,7 +7,7 @@ import GallerySection from "@/components/GallerySection";
 import Footer from "@/components/Footer";
 import FloatingCallButton from "@/components/FloatingCallButton";
 import ClientServiceHighlights from "@/components/ClientServiceHighlights";
-import ServiceHighlights from "@/components/ServiceHighlights";
+// import ServiceHighlights from "@/components/ServiceHighlights";
 //import WhatWeOffer from "@/components/WhatWeOffer";
 
 const Index = () => {
@@ -15,7 +15,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       <HeroSection />
-      <ServiceHighlights />
+      {/* <ServiceHighlights /> */}
       {/* <WhatWeOffer /> */}
       <ClientServiceHighlights />
       <AttractionsSection />
