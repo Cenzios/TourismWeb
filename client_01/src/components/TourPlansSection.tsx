@@ -105,7 +105,7 @@ const TourPlansSection = () => {
   return (
     <section
       id="tours"
-      className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white"
+      className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-muted"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
